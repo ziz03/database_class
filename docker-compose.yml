@@ -1,0 +1,38 @@
+version: "4.38"
+
+services:
+  app:
+    build: .  # 使用目前目錄下的 Dockerfile
+    ports:
+      - "80:80"   # 將主機的 80 端口映射到容器的 80 端口
+      - "443:443"  # (如果需要 HTTPS)
+    volumes:
+      - ./:/var/www/html  # 將專案目錄同步到容器的網站目錄
+    depends_on:
+      - db  # 確保在資料庫啟動後再啟動
+    environment:
+      MYSQL_HOST: db   # 設定環境變數，讓 PHP 程式可以找到資料庫
+
+  db:
+    image: mysql:latest  # 使用最新的 MySQL 映像檔
+    environment:
+      MYSQL_DATABASE: php_docker   # 資料庫名稱
+      MYSQL_USER: php_docker      # 使用者名稱
+      MYSQL_PASSWORD: password    # 密碼
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"  # 為了簡化測試，允許空密碼 (不建議在生產環境使用)
+    volumes:
+      - db_data:/var/lib/mysql  # 將資料庫資料儲存在 volume 中
+      - "./db:/docker-entrypoint-initdb.d"  # 掛載 SQL 檔案 (如果需要初始化資料庫)
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin  # 使用 phpMyAdmin 映像檔
+    ports:
+      - "8001:80"  # 將主機的 8001 端口映射到容器的 80 端口
+    environment:
+      PMA_HOST: db   # 設定 phpMyAdmin 要連線的資料庫主機
+      PMA_PORT: 3306  # 設定 phpMyAdmin 要連線的資料庫端口
+    depends_on:
+      - db  # 確保在資料庫啟動後再啟動
+
+volumes:
+  db_data:  # 定義一個 volume，用於儲存資料庫資料
