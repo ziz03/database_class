@@ -1,4 +1,4 @@
-version: "4.38"
+version: "3.8"
 
 services:
   app:
@@ -15,11 +15,11 @@ services:
 
   db:
     image: mysql:latest  # 使用最新的 MySQL 映像檔
-    environment:
-      MYSQL_DATABASE: php_docker   # 資料庫名稱
-      MYSQL_USER: php_docker      # 使用者名稱
-      MYSQL_PASSWORD: password    # 密碼
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"  # 為了簡化測試，允許空密碼 (不建議在生產環境使用)
+    # environment:
+    #   MYSQL_DATABASE: php_docker   # 資料庫名稱
+    #   MYSQL_USER: php_docker      # 使用者名稱
+    #   MYSQL_PASSWORD: password    # 密碼
+      # MYSQL_ALLOW_EMPTY_PASSWORD: "yes"  # 為了簡化測試，允許空密碼 (不建議在生產環境使用)
     volumes:
       - db_data:/var/lib/mysql  # 將資料庫資料儲存在 volume 中
       - "./db:/docker-entrypoint-initdb.d"  # 掛載 SQL 檔案 (如果需要初始化資料庫)
