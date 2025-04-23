@@ -1,18 +1,18 @@
 <?php
 session_start(); // 啟用 session
-include 'database.php'; // 包含資料庫連接檔案
+// include 'database.php'; // 包含資料庫連接檔案
 
 // 範例：從資料庫中獲取一些資訊 (可以替換成你需要的資料)
-$sql = "SELECT ID, Title FROM php_docker_table LIMIT 6"; // 範例查詢
-$result = $conn->query($sql);
+// $sql = "SELECT ID, Title FROM php_docker_table LIMIT 6"; // 範例查詢
+// $result = $conn->query($sql);
 
-$products = []; // 儲存產品資料的陣列
+// $products = []; // 儲存產品資料的陣列
 
-if ($result->num_rows > 0) {
-  while($row = $result->fetch_assoc()) {
-    $products[] = $row; // 將每一列資料加入到陣列
-  }
-}
+// if ($result->num_rows > 0) {
+//   while($row = $result->fetch_assoc()) {
+//     $products[] = $row; // 將每一列資料加入到陣列
+//   }
+// }
 
 ?>
 
@@ -69,4 +69,4 @@ if ($result->num_rows > 0) {
 </body>
 </html>
 
-<?php $conn->close(); ?>
+<?php //$conn->close(); ?>
