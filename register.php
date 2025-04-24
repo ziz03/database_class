@@ -38,14 +38,11 @@
                                     <label for="password" class="form-label">密碼</label>
                                     <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="請輸入密碼">
                                 </div>
-                                <div class="d-flex justify-content-end mb-3">
-                                    <a href="#">忘記密碼</a>
+                                <div class="d-grid mb-3">
+                                    <button type="submit" class="btn btn-dark btn-lg">註冊</button>
                                 </div>
                                 <div class="d-grid mb-3">
-                                    <button type="submit" class="btn btn-dark btn-lg">登入</button>
-                                </div>
-                                <div class="d-grid mb-3">
-                                    <a href="register.php" class="btn btn-outline-dark btn-lg">註冊</a>
+                                    <a href="login.php" class="btn btn-outline-dark btn-lg">已有帳號?</a>
                                 </div>
                             </form>
                         </div>
