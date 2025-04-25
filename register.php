@@ -27,7 +27,7 @@
                     <!-- 左邊登入表單 -->
                     <div class="col-md-6 d-flex align-items-center justify-content-center">
                         <div class="p-4 w-100" style="max-width: 400px;">
-                            <h4 class="mb-3">歡迎回來</h4>
+                            <h4 class="mb-3">歡迎加入</h4>
                             <hr>
                             <form action="action/login.php" method="post">
                                 <div class="mb-3">
