@@ -34,13 +34,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <span class="ms-2 sidebar-text">調整權限</span>
                 </a>
             </li>
-
-            <!-- <li class="nav-item mb-2">
-                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'chat.php') ? 'active bg-primary rounded' : ''; ?>" href="chat.php" data-bs-toggle="tooltip" data-bs-placement="right" title="聊天">
-                    💬
-                    <span class="ms-2 sidebar-text">聊天</span>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white d-flex align-items-center " href="..\index.php" data-bs-toggle="tooltip" data-bs-placement="right" title="看看前台">
+                    😎
+                    <span class="ms-2 sidebar-text">看看前台</span>
                 </a>
-            </li> -->
+            </li>
         </ul>
         <div class="logout-container mt-auto">
             <a class="nav-link text-white d-flex align-items-center" href="..\index.php" data-bs-toggle="tooltip" data-bs-placement="right" title="登出">

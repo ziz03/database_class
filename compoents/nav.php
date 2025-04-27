@@ -20,14 +20,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">購物車</a>
                 </li>
-                <?php if (empty($_SESSION['loggedin'])): ?>
+                <?php if (!empty($_SESSION['loggedin'])): ?>
+                    <?php if ($_SESSION['role'] === 'admin'): ?>
+                        <!-- 如果是管理員 -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin\dashboard.php">後台管理</a>
+                        </li>
+                    <?php else: ?>
+                        <!-- 如果是普通使用者 -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="userCenter.php">會員中心</a>
+                        </li>
+                    <?php endif; ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="action/logout.php">登出</a>
+                    </li>
+                <?php else: ?>
+                    <!-- 沒有登入的人才顯示登入 -->
                     <li class="nav-item">
                         <a class="nav-link" href="login.php">登入</a>
-                    </li>
-                    <?php else: ?>
-                        <li class="nav-item">
-                        <a class="nav-link" href="action/logout.php">登出
-                        </a>
                     </li>
                 <?php endif; ?>
             </ul>

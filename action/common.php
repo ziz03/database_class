@@ -1,12 +1,7 @@
 <?php
 require_once('database.php');
 
-function check_role()
-{
-    if ($_SESSION['role'] == 'user') {
-        header("Location: ../index.php");
-    }
-}
+
 function logoutAndRedirect($redirectUrl = '../index.php')
 {
     if (session_status() == PHP_SESSION_NONE) {
@@ -19,17 +14,16 @@ function logoutAndRedirect($redirectUrl = '../index.php')
 }
 function check_login()
 {
-    check_role();
     // 檢查是否有登入
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        if ($_SESSION['role'] == 'user') {
+            header("Location: ../index.php");
+        }
         header("Location: ../login.php");
         exit;
     }
-
-    // 取得使用者名字
-    $name = $_SESSION['name'];
-    return $name;
 }
+
 
 function get_user()
 {
@@ -44,6 +38,19 @@ function get_user()
     if ($result && $result->num_rows > 0) {
         $all_rows = $result->fetch_all(MYSQLI_ASSOC);
         // print_r($all_rows); // 印出全部資料
+        return $all_rows;
+    } else {
+        return null; // 找不到這個 user
+    }
+}
+function get_user_byemail($email) {
+    global $conn;
+    check_login();
+    $sql = "SELECT  name, role FROM user WHERE email = '$email'"; ;
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        $all_rows = $result->fetch_all(MYSQLI_ASSOC);
+        print_r($all_rows); // 印出全部資料
         return $all_rows;
     } else {
         return null; // 找不到這個 user
