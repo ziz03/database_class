@@ -2,7 +2,7 @@
 
 $servername = 'localhost';  // 你的資料庫伺服器
 $username = 'root';
-$password = ' ';
+$password = '';
 $dbname = "class";    // 你的資料庫名稱
 
 // 建立連接

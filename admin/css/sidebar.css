@@ -1,0 +1,35 @@
+/* sidebar 樣式 */
+#sidebar {
+  width: 250px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+#sidebar.collapsed {
+  width: 80px;
+}
+
+/* 隱藏文字 */
+#sidebar.collapsed .sidebar-text {
+  display: none;
+}
+
+/* 子選單 */
+.submenu {
+  display: none;
+  padding-left: 1.5rem;
+}
+
+.submenu.show {
+  display: block;
+}
+
+/* Tooltip 避免被蓋住 */
+.tooltip-inner {
+  max-width: none;
+}
+.logout-container {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}

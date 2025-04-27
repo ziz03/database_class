@@ -16,3 +16,13 @@ NPTU class 需要
 -  可能要新增admin的後臺管理頁面?因為有分權限;register的user name 還沒加
 #### by ziz 4/26 00:47
 ---
+2025/04/27
+###  register跟login 大蓋好了也把錯誤那邊的修正用alert去提醒user
+###  後台dashboard 以新增sidebar 後台也會隨著不同的admin 人員去顯示他的名字
+###  action/common.php 用來放常用的function
+### 輸入框都有新增強制要求user 輸入才不會出錯
+
+![RUNOOB 图标](readmeimg\dashboard.png)
+
+![RUNOOB 图标](readmeimg\dashboard2.png)
+---

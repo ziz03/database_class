@@ -1,5 +1,9 @@
 <?php
-
+// 放在 login.php 頁面的適當位置（通常在 <body> 標籤內的開始處）
+if (isset($_GET['error'])) {
+    $error = $_GET['error'];
+    echo '<script>alert("' . $error . '");</script>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,14 +33,18 @@
                         <div class="p-4 w-100" style="max-width: 400px;">
                             <h4 class="mb-3">歡迎加入</h4>
                             <hr>
-                            <form action="action/login.php" method="post">
+                            <form action="action/register.php" method="post">
                                 <div class="mb-3">
                                     <label for="account" class="form-label">帳號</label>
-                                    <input type="text" class="form-control form-control-lg" id="account" name="account" placeholder="請輸入帳號(email)">
+                                    <input type="text" class="form-control form-control-lg" id="account" name="account" placeholder="請輸入帳號(email)" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">名稱</label>
+                                    <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="請輸入名稱(name)" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">密碼</label>
-                                    <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="請輸入密碼">
+                                    <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="請輸入密碼" required>
                                 </div>
                                 <div class="d-grid mb-3">
                                     <button type="submit" class="btn btn-dark btn-lg">註冊</button>

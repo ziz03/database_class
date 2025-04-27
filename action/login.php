@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../database.php'; // 資料庫連線放在這個檔案
+require_once 'database.php'; // 資料庫連線放在這個檔案
 
 if (isset($_POST['account']) && isset($_POST['password'])) 
 {
@@ -38,19 +38,25 @@ if (isset($_POST['account']) && isset($_POST['password']))
         } 
         else 
         {
-            echo "密碼錯誤";
+            // 密碼錯誤，重定向並帶上錯誤訊息
+            header("Location: ../login.php?error=密碼錯誤");
+            exit();
         }
     } 
     else 
     {
-        echo "找不到帳號";
+        // 找不到帳號，重定向並帶上錯誤訊息
+        header("Location: ../login.php?error=找不到帳號");
+        exit();
     }
 
     $stmt->close();
 } 
 else
 {
-    echo "請填寫帳號和密碼";
+    // 未填寫帳號或密碼，重定向並帶上錯誤訊息
+    header("Location: ../login.php?error=請填寫帳號和密碼");
+    exit();
 }
 
 $conn->close();

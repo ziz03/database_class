@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../database.php'; // 連線資料庫
+require_once 'database.php'; // 連線資料庫
 
 // 檢查是否從表單送出資料
 if (isset($_POST['account'], $_POST['password'], $_POST['name'])) 
