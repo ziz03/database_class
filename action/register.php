@@ -48,7 +48,7 @@ if (isset($_POST['account'], $_POST['password'], $_POST['name']))
 
         $stmt->close();
         $conn->close();
-        header("Location: ../index2.php"); // 回首頁
+        header("Location: ../index.php"); // 回首頁
         exit();
     } 
     else 

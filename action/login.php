@@ -31,7 +31,7 @@ if (isset($_POST['account']) && isset($_POST['password']))
             } 
             else 
             {
-                header("Location: ../index2.php"); // 一般使用者
+                header("Location: ../index.php"); // 一般使用者
             }
             
             exit();

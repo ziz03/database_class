@@ -1,4 +1,5 @@
 <?php
+session_start();
 // 放在 login.php 頁面的適當位置（通常在 <body> 標籤內的開始處）
 if (isset($_GET['error'])) {
     $error = $_GET['error'];
