@@ -22,7 +22,9 @@ NPTU class 需要
 ###  action/common.php 用來放常用的function
 ### 輸入框都有新增強制要求user 輸入才不會出錯
 
-![RUNOOB 图标](readmeimg\dashboard.png)
+![RUNOOB 图标](readmeimg/dashboard.png)
 
-![RUNOOB 图标](readmeimg\dashboard2.png)
+![RUNOOB 图标](readmeimg/dashboard2.png)
+
+#### 負責人: ZJ  2025/04/27 09:45
 ---
