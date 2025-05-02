@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark py-4">
+<nav class="navbar navbar-expand-lg  navbar-dark py-4" style="background-color: black;">
     <div class="container-fluid align-items-center">
         <!-- 左側 Logo + 標題 -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="https://sitestorage.notorious-2019.com/icon/NOTORIOUS_logo.svg" alt="NOTORIOUS_logo" style="width: 200px;" class="me-2">
+            <img src="image\blackLOGO.png" alt="NOTORIOUS_logo" style="width: 100px; height: 100px;" class="me-2">
         </a>
 
         <!-- 漢堡按鈕 -->

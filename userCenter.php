@@ -1,8 +1,8 @@
 <?php 
 session_start();
 require_once('action/common.php');
-check_login();
-get_user_byemail($_SESSION['email']);
+$userName=check_login();
+// get_user_byemail($_SESSION['email']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +32,7 @@ get_user_byemail($_SESSION['email']);
                         <div class="p-4 w-100" style="max-width: 400px;">
                             <h4 class="mb-3">更改名稱</h4>
                             <hr>
-                            <form action="action/login.php" method="post">
+                            <form action="action/usercenter.php" method="post">
                                 <div class="mb-3">
                                     <label for="account" class="form-label">帳號</label>
                                     <input type="text" class="form-control form-control-lg" id="account" name="account" placeholder="請輸入帳號(email)" required>
@@ -42,7 +42,7 @@ get_user_byemail($_SESSION['email']);
                                     <input type="text" class="form-control form-control-lg" id="editname" name="editname" placeholder="請輸入新名字" required>
                                 </div>
                                 <div class="d-grid mb-3">
-                                    <button type="submit" class="btn btn-dark btn-lg">登入</button>
+                                    <button type="submit" class="btn btn-dark btn-lg">更改名字</button>
                                 </div>
                                 <div class="d-grid mb-3">
                                     <a href="register.php" class="btn btn-outline-dark btn-lg">註冊</a>

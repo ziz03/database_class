@@ -22,6 +22,7 @@ function check_login()
         header("Location: ../login.php");
         exit;
     }
+    return $_SESSION['name'];
 }
 
 

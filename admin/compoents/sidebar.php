@@ -22,10 +22,22 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
 
             <li class="nav-item mb-2">
-                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'products.php') ? 'active bg-primary rounded' : ''; ?>" href="products.php" data-bs-toggle="tooltip" data-bs-target="#submenu1" aria-expanded="false" aria-controls="產品">
+                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'products.php') ? 'active bg-primary rounded' : ''; ?>"
+                    data-bs-toggle="collapse"
+                    href="#submenu1"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="submenu1">
                     📄
                     <span class="ms-2 sidebar-text">產品</span>
+                    <i class="ms-auto bi bi-chevron-down"></i>
                 </a>
+                <div class="collapse <?php echo ($current_page == 'products.php') ? 'show' : ''; ?>" id="submenu1">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
+                        <li><a href="products.php" class="nav-link text-white <?php echo ($current_page == 'products.php') ? 'fw-bold' : ''; ?>">產品列表</a></li>
+                        <li><a href="product_add.php" class="nav-link text-white">新增產品</a></li>
+                    </ul>
+                </div>
             </li>
 
             <li class="nav-item mb-2">
@@ -43,8 +55,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </ul>
         <div class="logout-container mt-auto">
             <a class="nav-link text-white d-flex align-items-center" href="..\index.php" data-bs-toggle="tooltip" data-bs-placement="right" title="登出">
-                
-                <a class="nav-link" href="..\action\logout.php">🚪 登出</a> 
+
+                <a class="nav-link" href="..\action\logout.php">🚪 登出</a>
             </a>
         </div>
 

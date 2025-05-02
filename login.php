@@ -13,7 +13,7 @@ if (isset($_GET['error'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="icon" href="https://sitestorage.notorious-2019.com/icon/icon_logo.svg">
+    <link rel="icon" href="image\blackLOGO.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
@@ -44,7 +44,7 @@ if (isset($_GET['error'])) {
                                     <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="請輸入密碼" required>
                                 </div>
                                 <div class="d-flex justify-content-end mb-3">
-                                    <a href="#">忘記密碼</a>
+                                    <a href="forgotPassword.php">忘記密碼</a>
                                 </div>
                                 <div class="d-grid mb-3">
                                     <button type="submit" class="btn btn-dark btn-lg">登入</button>

@@ -36,3 +36,11 @@ NPTU class 需要
 ### 新增user center 還沒完全弄好
 #### 負責人: ZJ  2025/04/27 22:28
 ---
+2025/05/03
+### 修改logo (image/blackLOGO.png)
+### 修點bug
+### 新增forgotPassword
+![RUNOOB 图标](readmeimg/1280.jpg)
+
+#### 負責人: ZJ  2025/05/03 00:
+---
