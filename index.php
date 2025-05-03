@@ -26,11 +26,11 @@ session_start();
             <div class="row g-4 justify-content-center">
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="card h-100 text-center" style="max-width: 300px; margin: 0 auto;">
-                        <img src="https://sitestorage.notorious-2019.com/product/180101014_g7_1.jpg"
-                            class="card-img-top" alt="產品 1">
+                        <img src="https://s2.eslite.com/unsafe/fit-in/x900/s.eslite.com/upload/product/o/2682191437001/20220623035331987360.jpg"
+                            class="card-img-top" alt="六弄咖啡館">
                         <div class="card-body">
-                            <h5 class="card-title">產品 1</h5>
-                            <a href="#" class="btn btn-outline-primary btn-sm">查看詳情</a>
+                            <h5 class="card-title">六弄咖啡館</h5>
+                            <a href="product.php?product_id=1" class="btn btn-outline-primary btn-sm">查看詳情</a>
                             <form method="POST" action="action/cart.php">
                                 <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="product" value="產品 1">
