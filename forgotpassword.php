@@ -46,7 +46,7 @@ $step = isset($_SESSION['reset_email']) ? 'password' : 'email';
                                         <button type="submit" class="btn btn-dark btn-lg">送出</button>
                                     </div>
                                     <div class="d-grid mb-3">
-                                        <a href="login.php" class="btn btn-outline-dark btn-lg">屌你老母突然就想起來了</a>
+                                        <a href="login.php" class="btn btn-outline-dark btn-lg">突然就想起來了</a>
                                     </div>
                                 </form>
                             <?php elseif ($step === 'password'): ?>
@@ -70,8 +70,8 @@ $step = isset($_SESSION['reset_email']) ? 'password' : 'email';
                         </div>
                     </div>
                     <!-- 右邊品牌區塊 -->
-                    <div class="col-md-6 bg-dark text-white d-flex align-items-center justify-content-center flex-column p-4">
-                        <img src="https://sitestorage.notorious-2019.com/icon/NOTORIOUS_logo.svg" alt="NOTORIOUS" class="mb-3" style="max-width: 300px;">
+                    <div class="col-md-6 text-white d-flex align-items-center justify-content-center flex-column p-4" style="background-color:black;">
+                        <img src="image\blackLOGO.png" alt="NOTORIOUS" class="mb-3" style="max-width: 300px;">
                     </div>
                 </div>
             </div>

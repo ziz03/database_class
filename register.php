@@ -56,8 +56,8 @@ if (isset($_GET['error'])) {
                         </div>
                     </div>
                     <!-- 右邊品牌區塊 -->
-                    <div class="col-md-6 bg-dark text-white d-flex align-items-center justify-content-center flex-column p-4">
-                        <img src="https://sitestorage.notorious-2019.com/icon/NOTORIOUS_logo.svg" alt="NOTORIOUS" class="mb-3" style="max-width: 300px;">
+                    <div class="col-md-6  text-white d-flex align-items-center justify-content-center flex-column p-4" style="background-color:black;">
+                        <img src="image\blackLOGO.png" alt="blackLOGO" class="mb-3" style="max-width: 300px;">
                     </div>
                 </div>
             </div>

@@ -18,7 +18,7 @@
                     <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">購物車</a>
+                    <a class="nav-link" href="cart.php">購物車</a>
                 </li>
                 <?php if (!empty($_SESSION['loggedin'])): ?>
                     <?php if ($_SESSION['role'] === 'admin'): ?>
