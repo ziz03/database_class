@@ -21,9 +21,9 @@ NPTU class 需要
 ###  後台dashboard 以新增sidebar 後台也會隨著不同的admin 人員去顯示他的名字
 ###  action/common.php 用來放常用的function
 ###  輸入框都有新增強制要求user 輸入才不會出錯
-![RUNOOB 图标](readmeimg/dashboard.png)
+![ 图标](readmeimg/dashboard.png)
 
-![RUNOOB 图标](readmeimg/dashboard2.png)
+![ 图标](readmeimg/dashboard2.png)
 
 #### 負責人: ZJ  2025/04/27 09:45
 
@@ -40,11 +40,16 @@ NPTU class 需要
 ### 修改logo (image/blackLOGO.png)
 ### 修點bug
 ### 新增forgotPassword
-![RUNOOB 图标](readmeimg/1280.jpg)
+![ 图标](readmeimg/1280.jpg)
 
 #### 負責人: ZJ  2025/05/03 00:
 ---
 ### 修正logo，增加購物車前後端(尚未完善)和首頁加入購物車按鈕
 ### icon靈異事件
 #### by ziz 2025/05/03 15
+
+### 已修正logo可能是include 'compoents/nav.php'; 放在最上面所導致的 應該要放在 body 標籤內的最上面
+![ 图标](readmeimg/images.jpg)
+
+### by ZJ 2025/05/03 16:00
 ----
