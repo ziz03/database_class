@@ -26,22 +26,45 @@ $stmt->close();
 
     <section id="products" class="py-5 mb-5">
         <div class="container-fluid">
-            <h2 class="mb-4">所有產品</h2>
+            <h2 class="mb-4"><?php echo htmlspecialchars($products[0]['name']) ?></h2>
             <div class="row g-4 justify-content-center">
                 <?php foreach ($products as $product): ?>
-                    <div class="col-sm-6 col-md-3 col-lg-3">
-                        <div class="card h-100 text-center" style="max-width: 300px; margin: 0 auto;">
-                            <img src="<?= htmlspecialchars($product['image_url']) ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']) ?>">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
-                                <p class="card-text"><?= htmlspecialchars($product['description']) ?></p>
-                                <h6 class="card-subtitle mb-2 text-muted"><?= number_format($product['price'], 2) ?> 元</h6>
-                                <form method="POST" action="action/cart.php">
-                                    <input type="hidden" name="action" value="add">
-                                    <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                                    <button type="submit" class="btn btn-primary btn-sm">加入購物車</button>
-                                </form>
-                                <a href="product_detail.php?product_id=<?= $product['id'] ?>" class="btn btn-outline-primary btn-sm mt-2">查看詳情</a>
+                    <div class="col-12 col-md-10 col-lg-8 ">
+                        <div class="card h-100 ">
+                            <div class="row g-0 h-100">
+                                <!-- 左側圖片 -->
+                                <div class="col-4">
+                                    <img
+                                        src="<?= htmlspecialchars($product['image_url']) ?>"
+                                        class="img-fluid h-100 w-100 object-fit-cover"
+                                        alt="<?= htmlspecialchars($product['name']) ?>">
+                                </div>
+                                <!-- 右側內容 -->
+                                <div class="col-8">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
+                                        <div class="card-text mb-3 px-1">
+                                            <?php
+                                            // 將描述文字分段處理
+                                            $paragraphs = explode("\n", htmlspecialchars($product['description']));
+                                            foreach ($paragraphs as $paragraph) {
+                                                if (trim($paragraph) !== '') {
+                                                    echo '<p class="mb-3 lh-base text-break">' . $paragraph . '</p>';
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                        <p class="card-subtitle mb-3 fs-2  " style="color: red">$<?= number_format($product['price']) ?> 元</p>
+                                        <!-- 按鈕區塊：在文字下面 -->
+                                        <div class="mt-auto">
+                                            <form method="POST" action="action/cart.php" class="d-inline-block me-2">
+                                                <input type="hidden" name="action" value="add">
+                                                <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">加入購物車</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -53,6 +76,8 @@ $stmt->close();
     <div class="container">
         <a href="cart.php" class="btn btn-success btn-lg w-100">查看購物車與結帳</a>
     </div>
+
+
 
     <?php include 'compoents/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
