@@ -14,6 +14,8 @@ function generate_breadcrumb($current_page) {
         'edit_product.php' => ['標題' => '編輯產品', '父頁面' => 'products.php'],
         'statistics.php' => ['標題' => '統計資料', '父頁面' => 'dashboard.php'],
         'chat.php' => ['標題' => '聊天室', '父頁面' => 'dashboard.php'],
+        'product_add.php' => ['標題' => '新增產品', '父頁面' => 'dashboard.php'],
+        
         // 可以根據需要添加更多頁面
     ];
     

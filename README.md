@@ -62,3 +62,10 @@ NPTU class 需要
 ### 修改product.php 排版
 
 #### by ZJ 2025/05/03 23:59
+---
+### 修改product.php 排版 及新增刪除功能(編輯功能還沒做)
+### 修改index.php 可以去抓product的資料表顯示出來
+### 修改product_add.php 可以上傳圖片到指定資料夾(image)資料庫也抓的到位置
+
+#### by ZJ 2025/05/04 23:16
+---
