@@ -78,10 +78,15 @@ NPTU class 需要
 ### 新增action/cart.php update 方法
 ### 新增admin/products.php 更改庫存數量功能
 
-### by 77 2025/05/08 0:54
+### by 77 2025/05/08 00:54
 ---
 ### 新增admin/products.php 商品名稱&&商品金額更新功能
 ### 修改admin/products.php 將商品名稱&&商品金額&&庫存數量 按鈕整合成一個
 ![ 图标](readmeimg/ProductManagement.png)
 
-### by 77 2025/05/08 1:13
+### by 77 2025/05/08 01:13
+---
+### 新增admin/changestatus.php 修改使用者權限功能
+![ 图标](readmeimg/user_update.png.png)
+
+### by 77 2025/05/08 02:13
