@@ -40,7 +40,7 @@ require_once 'action/database.php'; // 確保連接到資料庫
                         $image_url = $product['image_url'];
                         // 檢查並移除 "../" 前綴
                         if (strpos($image_url, '../') === 0) {
-                            $image_url = substr($image_url, 3); // 移除前三個字符 "../"
+                            $image_url = substr($image_url, 1); // 移除前三個字符 "../"
                         }
                         ?>
                         <div class="col-sm-6 col-md-3 col-lg-3">
