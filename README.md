@@ -74,3 +74,8 @@ NPTU class 需要
 
 #### by ZJ 2025/05/07 23:53
 ---
+### 修改cart.php 更新數量 
+### 新增action/cart.php update 方法
+### 新增admin/products.php 更改庫存數量功能
+
+### by 77 2025/05/08 0:54
