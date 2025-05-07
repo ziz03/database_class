@@ -67,7 +67,7 @@ $stmt->close();
                             <form method="POST" action="action/cart.php" class="d-inline">
                                 <input type="hidden" name="action" value="update">
                                 <input type="hidden" name="cart_item_id" value="<?= $item['id'] ?>">
-                                <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1" class="form-control form-control-sm" style="width: 70px;">
+                                <input type="number" name="quantity" value="<?= $item['quantity'] ?>" min="1" class="form-control form-control-sm" data-id="<?= $item['id'] ?>"  style="width: 70px;">
                                 <button type="submit" class="btn btn-primary btn-sm mt-2">更新數量</button>
                             </form>
                         </td>
