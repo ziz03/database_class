@@ -6,11 +6,11 @@ require_once 'compoents/breadcrumb.php';
 
 $userName = check_login();
 $current_page = "products";
+
 // 處理刪除操作
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     $product_id = intval($_GET['delete']);
 
-    // 執行刪除操作
     $sql = "DELETE FROM products WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $product_id);
@@ -21,7 +21,25 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
         $_SESSION['message'] = "刪除失敗，請稍後再試。";
     }
 
-    // 重定向到相同頁面以清除 URL 參數
+    header("Location: products.php");
+    exit;
+}
+
+// 處理庫存更新操作
+if (isset($_POST['update_stock']) && isset($_POST['product_id']) && isset($_POST['new_stock'])) {
+    $product_id = intval($_POST['product_id']);
+    $new_stock = intval($_POST['new_stock']);
+
+    $sql = "UPDATE products SET stock = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $new_stock, $product_id);
+
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "庫存已成功更新！";
+    } else {
+        $_SESSION['message'] = "庫存更新失敗，請稍後再試。";
+    }
+
     header("Location: products.php");
     exit;
 }
@@ -35,7 +53,8 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品管理</title>
     <link rel="icon" href="https://sitestorage.notorious-2019.com/icon/icon_logo.svg">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="./css/sidebar.css">
 </head>
 
@@ -68,33 +87,43 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
             </thead>
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row['id']) ?></td>
-                        <td><?= htmlspecialchars($row['name']) ?></td>
-                        <td>$<?= htmlspecialchars($row['price']) ?></td>
-                        <td><?= htmlspecialchars($row['stock']) ?></td>
-                        <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="商品圖片" style="height: 50px;"></td>
-                        <td><?= htmlspecialchars($row['created_at']) ?></td>
-                        <td> <a href="products.php?delete=<?= $row['id'] ?>" 
-                                class="btn btn-primary btn-sm mt-2"
-                                onclick="return confirm('確定要刪除此商品嗎？')">刪除</a></td><!-- 增加刪除連結 帶她的id就好 編輯也是一樣帶ID就可以顯示他的所有訊息了 -->
-                    </tr>
+                <tr>
+                    <td><?= htmlspecialchars($row['id']) ?></td>
+                    <td><?= htmlspecialchars($row['name']) ?></td>
+                    <td>$<?= htmlspecialchars($row['price']) ?></td>
+                    <td>
+                        <!-- 新增庫存編輯功能 -->
+                        <form method="POST" class="d-flex align-items-center">
+                            <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
+                            <input type="number" name="new_stock" value="<?= htmlspecialchars($row['stock']) ?>" min="0"
+                                class="form-control form-control-sm me-2" style="width: 80px;">
+                            <button type="submit" name="update_stock" class="btn btn-primary btn-sm mt-2" >更新</button>
+                        </form>
+                    </td>
+                    <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="商品圖片" style="height: 50px;"></td>
+                    <td><?= htmlspecialchars($row['created_at']) ?></td>
+                    <td>
+                        <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-primary btn-sm mt-2"
+                            onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
+                    </td>
+                </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
+
     <!-- 使用 JavaScript alert 顯示訊息 -->
     <?php if (isset($_SESSION['message'])): ?>
-        <script>
-            alert("<?= htmlspecialchars($_SESSION['message']) ?>");
-        </script>
+    <script>
+    alert("<?= htmlspecialchars($_SESSION['message']) ?>");
+    </script>
     <?php
-        // 顯示後清除訊息，避免重新整理後再次顯示
         unset($_SESSION['message']);
     endif;
     ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
     <script src="./js/sidebar.js"></script>
 </body>
 
