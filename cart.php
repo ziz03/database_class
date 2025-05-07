@@ -34,7 +34,9 @@ $stmt->close();
 </head>
 
 <body>
+<div class="wrapper d-flex flex-column min-vh-100">
 <?php include 'compoents/nav.php'; ?>
+<main class="flex-grow-1">
 
 <div class="container mt-5">
     <h2 class="mb-4">購物車內容</h2>
@@ -69,7 +71,7 @@ $stmt->close();
                                 <button type="submit" class="btn btn-primary btn-sm mt-2">更新數量</button>
                             </form>
                         </td>
-                        <td><?= number_format($subtotal, 2) ?> 元</td>
+                        <td><?= number_format($subtotal, 0) ?> 元</td>
                         <td>
                             <form method="POST" action="action/cart.php" class="d-inline">
                                 <input type="hidden" name="action" value="remove">
@@ -82,12 +84,16 @@ $stmt->close();
             </tbody>
         </table>
         <div class="d-flex justify-content-between">
-            <h4>總金額: <?= number_format($total_price, 2) ?> 元</h4>
+            <h4>總金額: <?= number_format($total_price,0 ) ?> 元</h4>
             <a href="checkout.php" class="btn btn-success btn-lg">前往結帳</a>
         </div>
     <?php endif; ?>
 </div>
+</main>
 
-<?php include 'compoents/footer.php'; ?>
+    <?php 
+    include 'compoents/footer.php'; 
+    ?>
+</div>
 </body>
 </html>
