@@ -87,6 +87,6 @@ NPTU class 需要
 ### by 77 2025/05/08 01:13
 ---
 ### 新增admin/changestatus.php 修改使用者權限功能
-![ 图标](readmeimg/userdate.png.png)
+![ 图标](readmeimg/userdate.png)
 
 ### by 77 2025/05/08 02:13
