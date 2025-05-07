@@ -39,7 +39,7 @@ function get_roles($conn) {
     $result = $conn->query($sql);
     $roles = [];
     while ($row = $result->fetch_assoc()) {
-        $roles[] = $row['role'];
+        $roles[] = $row['role']; 
     }
     return $roles;
 }
