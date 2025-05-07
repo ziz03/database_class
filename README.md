@@ -79,3 +79,7 @@ NPTU class 需要
 ### 新增admin/products.php 更改庫存數量功能
 
 ### by 77 2025/05/08 0:54
+---
+### 新增admin/products.php 商品名稱&&商品金額更新功能
+### 修改admin/products.php 將商品名稱&&商品金額&&庫存數量 按鈕整合成一個
+![ 图标](readmeimg/ProductManagement.png)

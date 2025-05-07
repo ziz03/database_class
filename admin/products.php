@@ -25,19 +25,31 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
     exit;
 }
 
-// 處理庫存更新操作
-if (isset($_POST['update_stock']) && isset($_POST['product_id']) && isset($_POST['new_stock'])) {
+// 處理名稱、價格、庫存更新操作
+if (
+    isset($_POST['update_all']) &&
+    isset($_POST['product_id']) &&
+    isset($_POST['new_name']) &&
+    isset($_POST['new_price']) &&
+    isset($_POST['new_stock'])
+) {
     $product_id = intval($_POST['product_id']);
+    $new_name = trim($_POST['new_name']);
+    $new_price = floatval($_POST['new_price']);
     $new_stock = intval($_POST['new_stock']);
 
-    $sql = "UPDATE products SET stock = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $new_stock, $product_id);
-
-    if ($stmt->execute()) {
-        $_SESSION['message'] = "庫存已成功更新！";
+    if ($new_name === "" || $new_price < 0 || $new_stock < 0) {
+        $_SESSION['message'] = "請填寫正確的資料。";
     } else {
-        $_SESSION['message'] = "庫存更新失敗，請稍後再試。";
+        $sql = "UPDATE products SET name = ?, price = ?, stock = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sdii", $new_name, $new_price, $new_stock, $product_id);
+
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "商品資料已成功更新！";
+        } else {
+            $_SESSION['message'] = "更新失敗，請稍後再試。";
+        }
     }
 
     header("Location: products.php");
@@ -88,24 +100,30 @@ if (isset($_POST['update_stock']) && isset($_POST['product_id']) && isset($_POST
             <tbody>
                 <?php while ($row = $result->fetch_assoc()): ?>
                 <tr>
-                    <td><?= htmlspecialchars($row['id']) ?></td>
-                    <td><?= htmlspecialchars($row['name']) ?></td>
-                    <td>$<?= htmlspecialchars($row['price']) ?></td>
-                    <td>
-                        <!-- 新增庫存編輯功能 -->
-                        <form method="POST" class="d-flex align-items-center">
-                            <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
+                    <form method="POST" class="d-flex align-items-center">
+                        <td><?= htmlspecialchars($row['id']) ?></td>
+                        <td>
+                            <input type="text" name="new_name" value="<?= htmlspecialchars($row['name']) ?>"
+                                class="form-control form-control-sm" required>
+                        </td>
+                        <td>
+                            <input type="number" name="new_price" step="0.01"
+                                value="<?= htmlspecialchars($row['price']) ?>"
+                                class="form-control form-control-sm" required>
+                        </td>
+                        <td>
                             <input type="number" name="new_stock" value="<?= htmlspecialchars($row['stock']) ?>" min="0"
-                                class="form-control form-control-sm me-2" style="width: 80px;">
-                            <button type="submit" name="update_stock" class="btn btn-primary btn-sm mt-2" >更新</button>
-                        </form>
-                    </td>
-                    <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="商品圖片" style="height: 50px;"></td>
-                    <td><?= htmlspecialchars($row['created_at']) ?></td>
-                    <td>
-                        <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-primary btn-sm mt-2"
-                            onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
-                    </td>
+                                class="form-control form-control-sm" required>
+                        </td>
+                        <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="商品圖片" style="height: 50px;"></td>
+                        <td><?= htmlspecialchars($row['created_at']) ?></td>
+                        <td>
+                            <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
+                            <button type="submit" name="update_all" class="btn btn-primary btn-sm mt-2">更新資料</button>
+                            <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-danger btn-sm mt-2"
+                                onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
+                        </td>
+                    </form>
                 </tr>
                 <?php endwhile; ?>
             </tbody>
