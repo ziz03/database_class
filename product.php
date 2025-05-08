@@ -57,10 +57,9 @@ if (!$product) {
                     <div class="card h-100">
                         <div class="row g-0 h-100">
                             <!-- 左側圖片 -->
-                            <div class="col-4">
-                                <img
-                                    src="<?php echo htmlspecialchars($imgUrl); ?>"
-                                    class="img-fluid h-100 w-100 object-fit-cover"
+                            <div class="col-4 d-flex align-items-center justify-content-center">
+                                <img src="<?php echo htmlspecialchars($imgUrl); ?>"
+                                    class="img-fluid w-100 object-fit-contain"
                                     alt="<?php echo htmlspecialchars($product['name']); ?>">
                             </div>
                             <!-- 右側內容 -->
@@ -85,7 +84,8 @@ if (!$product) {
                                     <div class="mt-auto">
                                         <form method="POST" action="action/cart.php" class="d-inline-block me-2">
                                             <input type="hidden" name="action" value="add">
-                                            <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
+                                            <input type="hidden" name="product_id"
+                                                value="<?php echo $product['id']; ?>">
                                             <button type="submit" class="btn btn-outline-danger btn-sm">
                                                 加入購物車
                                             </button>
