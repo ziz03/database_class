@@ -103,3 +103,9 @@ NPTU class 需要
 ![圖標](readmeimg/cart.png)
 
 ### by 77 2025/05/08 16:11
+---
+### 修改 index.php 會有搜尋框可以搜尋書籍 function 在 action/common.php 裡面 
+![搜尋](readmeimg/Search.png) 
+### by ZJ 2025/05/08 22:29
+
+---

@@ -4,6 +4,13 @@
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="image\blackLOGO.png" alt="NOTORIOUS_logo" style="width: 100px; height: 100px;" class="me-2">
         </a>
+        <?php
+        // 引入搜尋函數
+        require_once 'action/common.php';
+
+        // 使用特別為導航欄定制的樣式設定
+        displaySearchForm('d-flex me-auto', '', 'btn-outline-light', '搜尋書籍', '搜尋');
+        ?>
 
         <!-- 漢堡按鈕 -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -20,9 +27,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="cart.php">
                         </i>購物車
-                        
+
                     </a>
-                   
+
                 </li>
                 <?php if (!empty($_SESSION['loggedin'])): ?>
                     <?php if ($_SESSION['role'] === 'admin'): ?>
@@ -49,4 +56,3 @@
         </div>
     </div>
 </nav>
-                    

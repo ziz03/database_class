@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'action/database.php'; // 確保連接到資料庫
+require_once 'action/common.php';
 ?>
 
 <!DOCTYPE html>
@@ -23,51 +24,26 @@ require_once 'action/database.php'; // 確保連接到資料庫
 
     <section id="products" class="py-5 mb-5">
         <div class="container-fluid">
-            <h2 class="mb-4">推薦好書</h2>
-            <div class="row g-4 justify-content-center">
-
+            <h2 class="mb-4">
                 <?php
-                // 查詢所有產品
-                $sql = "SELECT * FROM products";
-                $result = $conn->query($sql);
-
-
-                // 檢查是否有產品
-                if ($result && $result->num_rows > 0) {
-                    // 遍歷所有產品
-                    while ($product = $result->fetch_assoc()) {
-                        // 處理圖片URL，移除前綴 "../"
-                        $image_url = $product['image_url'];
-                        // 檢查並移除 "../" 前綴
-                        if (strpos($image_url, '../') === 0) {
-                            $image_url = substr($image_url, 1); // 移除前三個字符 "../"
-                        }
-                        ?>
-                        <div class="col-sm-6 col-md-3 col-lg-3">
-                            <div class="card h-100 text-center" style="max-width: 300px; margin: 0 auto;">
-                                <img src="<?= htmlspecialchars($image_url) ?>" class="card-img-top"
-                                    alt="<?= htmlspecialchars($product['name']) ?>">
-                                <div class="card-body">
-                                    <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
-                                    <p class="card-text text-danger fw-bold">$<?= number_format($product['price']) ?></p>
-                                    <a href="product.php?product_id=<?= $product['id'] ?>"
-                                        class="btn btn-outline-primary btn-sm">查看詳情</a>
-                                    <form method="POST" action="action/cart.php" class="mt-2">
-                                        <input type="hidden" name="action" value="add">
-                                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                                        <button type="submit" class="btn btn-primary btn-sm">加入購物車</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                    }
+                if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+                    echo '搜尋結果：' . htmlspecialchars($_GET['keyword']);
                 } else {
-                    // 沒有產品時顯示提示
-                    echo '<div class="col-12 text-center"><p>暫無商品</p></div>';
+                    echo '推薦好書';
                 }
                 ?>
+            </h2>
+            <div class="row g-4 justify-content-center">
+                <?php
+                // 檢查是否有搜尋關鍵字
+                $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
 
+                // 使用搜尋函數獲取結果
+                $result = getProductSearchResults($conn, 'products', ['name', 'description'], $keyword);
+
+                // 使用現有函數顯示產品列表
+                displayProductsList($result, '暫無商品', $keyword);
+                ?>
             </div>
         </div>
     </section>
