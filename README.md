@@ -99,3 +99,7 @@ NPTU class 需要
 - nav 加icon還沒弄
 ### by ziz 2025/5/8 1400
 ---
+### 修改 cart.php 的數量更新樣式 及 移除按鈕改為icon
+![圖標](readmeimg/cart.png)
+
+### by 77 2025/05/08 16:11
