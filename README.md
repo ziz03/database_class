@@ -109,3 +109,9 @@ NPTU class 需要
 ### by ZJ 2025/05/08 22:29
 
 ---
+### 新增 changestatus.php 使用者及刪除使用者功能
+
+![功能](readmeimg/userupdate.png)
+
+### by 77 2025/05/08 22:58
+---
