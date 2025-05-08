@@ -81,7 +81,7 @@ if (
         <a href="product_add.php" class="btn btn-success mb-3">新增商品</a>
 
         <?php
-        $sql = "SELECT * FROM products ORDER BY created_at DESC";
+        $sql = "SELECT * FROM products ORDER BY id ASC ";
         $result = $conn->query($sql);
         ?>
 
