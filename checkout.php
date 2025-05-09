@@ -75,8 +75,8 @@ foreach ($cart_items as $item) {
                             <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="phone" class="form-label">聯絡電話</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                            <label for="recipient_phone" class="form-label">聯絡電話</label>
+                            <input type="tel" class="form-control" id="recipient_phone" name="recipient_phone" required>
                         </div>
                         <input type="hidden" name="total_price" value="<?= $total_price ?>">
                         <button type="submit" class="btn btn-success btn-lg">送出訂單</button>

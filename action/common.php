@@ -58,16 +58,7 @@ function get_user_byemail($email)
         return null; // 找不到這個 user
     }
 }
-/**
- * 显示搜索表单
- * 
- * @param string $formClass 表单的额外CSS类名
- * @param string $inputClass 输入框的额外CSS类名
- * @param string $buttonClass 按钮的额外CSS类名
- * @param string $placeholder 搜索框的占位文本
- * @param string $buttonText 搜索按钮文本
- * @return void 直接输出HTML
- */
+
 function displaySearchForm($formClass = '', $inputClass = '', $buttonClass = 'btn-outline-primary', $placeholder = '搜尋商品名稱或描述', $buttonText = '搜尋')
 {
     $keyword = isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '';
@@ -84,24 +75,16 @@ function displaySearchForm($formClass = '', $inputClass = '', $buttonClass = 'bt
     <?php
 }
 
-/**
- * 获取商品搜索结果
- * 
- * @param mysqli $conn 数据库连接
- * @param string $table 表名
- * @param array $searchFields 要搜索的字段数组，例如['name', 'description']
- * @param string $keyword 搜索关键词
- * @return mysqli_result|false 搜索结果集或false
- */
+
 function getProductSearchResults($conn, $table = 'products', $searchFields = ['name', 'description'], $keyword = '')
 {
-    // 如果没有提供关键词或关键词为空，返回所有产品
+    
     if (!isset($_GET['keyword']) || empty(trim($keyword))) {
         $sql = "SELECT * FROM $table";
         return $conn->query($sql);
     }
 
-    // 构建搜索SQL
+    
     $searchClauses = [];
     $params = [];
     $types = '';
@@ -109,15 +92,15 @@ function getProductSearchResults($conn, $table = 'products', $searchFields = ['n
     foreach ($searchFields as $field) {
         $searchClauses[] = "$field LIKE ?";
         $params[] = "%" . trim($keyword) . "%";
-        $types .= 's'; // 假设所有字段都是字符串类型
+        $types .= 's'; 
     }
 
     $sql = "SELECT * FROM $table WHERE " . implode(' OR ', $searchClauses);
 
-    // 准备和执行语句
+    
     $stmt = $conn->prepare($sql);
     if ($stmt) {
-        // 动态绑定参数
+        
         $stmt->bind_param($types, ...$params);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -128,25 +111,18 @@ function getProductSearchResults($conn, $table = 'products', $searchFields = ['n
     return false;
 }
 
-/**
- * 显示商品列表
- * 
- * @param mysqli_result $result MySQL查询结果
- * @param string $noResultsMessage 无结果时显示的消息
- * @param string $keyword 搜索关键词（用于显示搜索结果消息）
- * @return void 直接输出HTML
- */
+
 function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '')
 {
-    // 检查是否有产品
-    if ($result && $result->num_rows > 0) {
-        // 遍历所有产品
+    if ($result && $result->num_rows > 0)
+     {
+        
         while ($product = $result->fetch_assoc()) {
-            // 处理图片URL，移除前缀 "../"
+            
             $image_url = $product['image_url'];
-            // 检查并移除 "../" 前缀
+            
             if (strpos($image_url, '../') === 0) {
-                $image_url = substr($image_url, 1); // 移除前三个字符 "../"
+                $image_url = substr($image_url, 1); 
             }
     ?>
             <div class="col-sm-6 col-md-3 col-lg-3">
@@ -169,14 +145,16 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
 <?php
         }
 
-        // 如果是搜索结果且有关键词，显示结果数量
+    
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center mt-3">';
             echo '<p>找到 ' . $result->num_rows . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品</p>';
             echo '</div>';
         }
-    } else {
-        // 没有产品时显示提示
+    } 
+    else
+     {
+        
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center"><p>沒有找到符合 "' . htmlspecialchars($keyword) . '" 的商品</p></div>';
         } else {

@@ -15,7 +15,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
-                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'dashboard.php') ? 'active bg-primary rounded' : ''; ?>" href="dashboard.php" data-bs-toggle="tooltip" data-bs-placement="right" title="首頁">
+                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'dashboard.php') ? 'active bg-primary rounded' : ''; ?>"
+                    href="dashboard.php" data-bs-toggle="tooltip" data-bs-placement="right" title="首頁">
                     🏠
                     <span class="ms-2 sidebar-text">首頁</span>
                 </a>
@@ -23,10 +24,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <li class="nav-item mb-2">
                 <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'products.php') ? 'active bg-primary rounded' : ''; ?>"
-                    data-bs-toggle="collapse"
-                    href="#submenu1"
-                    role="button"
-                    aria-expanded="false"
+                    data-bs-toggle="collapse" href="#submenu1" role="button" aria-expanded="false"
                     aria-controls="submenu1">
                     📄
                     <span class="ms-2 sidebar-text">產品</span>
@@ -34,27 +32,37 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </a>
                 <div class="collapse <?php echo ($current_page == 'products.php') ? 'show' : ''; ?>" id="submenu1">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
-                        <li><a href="products.php" class="nav-link text-white <?php echo ($current_page == 'products.php') ? 'fw-bold' : ''; ?>">產品列表</a></li>
+                        <li><a href="products.php"
+                                class="nav-link text-white <?php echo ($current_page == 'products.php') ? 'fw-bold' : ''; ?>">產品列表</a>
+                        </li>
                         <li><a href="product_add.php" class="nav-link text-white">新增產品</a></li>
+                        
+                        <li> <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'orders.php') ? 'active bg-primary rounded' : ''; ?>"
+                                href="view_order.php" data-bs-toggle="tooltip" data-bs-placement="right" title="查看訂單">
+                                查看訂單
+                            </a></li>
                     </ul>
                 </div>
             </li>
 
             <li class="nav-item mb-2">
-                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'changestatus.php') ? 'active bg-primary rounded' : ''; ?>" href="changestatus.php" data-bs-toggle="tooltip" data-bs-placement="right" title="更換權限">
+                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'changestatus.php') ? 'active bg-primary rounded' : ''; ?>"
+                    href="changestatus.php" data-bs-toggle="tooltip" data-bs-placement="right" title="更換權限">
                     📊
                     <span class="ms-2 sidebar-text">調整權限</span>
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link text-white d-flex align-items-center " href="..\index.php" data-bs-toggle="tooltip" data-bs-placement="right" title="看看前台">
+                <a class="nav-link text-white d-flex align-items-center " href="..\index.php" data-bs-toggle="tooltip"
+                    data-bs-placement="right" title="看看前台">
                     😎
                     <span class="ms-2 sidebar-text">看看前台</span>
                 </a>
             </li>
         </ul>
         <div class="logout-container mt-auto">
-            <a class="nav-link text-white d-flex align-items-center" href="..\index.php" data-bs-toggle="tooltip" data-bs-placement="right" title="登出">
+            <a class="nav-link text-white d-flex align-items-center" href="..\index.php" data-bs-toggle="tooltip"
+                data-bs-placement="right" title="登出">
 
                 <a class="nav-link" href="..\action\logout.php">🚪 登出</a>
             </a>

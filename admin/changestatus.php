@@ -92,7 +92,7 @@ $roles = get_roles($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>調整權限</title>
-    <link rel="icon" href="https://sitestorage.notorious-2019.com/icon/icon_logo.svg">
+    <link rel="icon" href="../image\blackLOGO.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous">
     <link rel="stylesheet" href="./css/sidebar.css">

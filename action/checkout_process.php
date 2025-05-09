@@ -46,10 +46,48 @@ try {
     $stmt->close();
 
     $conn->commit();
-    header('Location: ../order_success.php');
+    echo "   
+<html>
+        <head>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        </head>
+    <body>
+    <script>
+    Swal.fire({
+    
+        icon: 'success',
+        title: '訂單已送出',
+        showConfirmButton: false,
+        timer: 2000
+    });
+    setTimeout(function() {
+        window.location.href = '../index.php';
+    }, 2000);
+    </script>
+    </body>
+</html> ";
     exit();
 } catch (Exception $e) {
-    $conn->rollback();
-    echo "訂單失敗：" . $e->getMessage();
+   $conn->rollback();
+    $error_message = $e->getMessage();
+    echo "
+<html>
+    <head>
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    </head>
+    <body>
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: '訂單失敗',
+        text: " . json_encode($error_message) . ",
+        confirmButtonText: '返回首頁'
+    }).then(() => {
+        window.location.href = '../index.php';
+    });
+    </script>
+    </body>
+</html>";
+    exit();
 }
 ?>
