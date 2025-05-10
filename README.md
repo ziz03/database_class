@@ -126,3 +126,10 @@ NPTU class 需要
 - user 購物車裡面數量新增可以直接輸入修改(原本只能按+-)
 - admin後臺管理首頁想想如何美化
 ### by ziz 2025/05/10 01:12
+---
+### 修改admin/compoents/sidebar.php 收縮問題
+### 新增Allproduct.php 顯示所有產品(暫時未新增資料，不知道能否成功)
+### 修改action/common.php displayProductsList方法可以傳入limit 去限制他回幾筆  預設為0
+
+### by ZJ 2025/05/10 12:27 
+---

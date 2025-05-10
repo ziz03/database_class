@@ -31,7 +31,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <i class="ms-auto bi bi-chevron-down"></i>
                 </a>
                 <div class="collapse <?php echo ($current_page == 'products.php') ? 'show' : ''; ?>" id="submenu1">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4 sidebar-text">
                         <li><a href="products.php"
                                 class="nav-link text-white <?php echo ($current_page == 'products.php') ? 'fw-bold' : ''; ?>">產品列表</a>
                         </li>
@@ -61,10 +61,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
         </ul>
         <div class="logout-container mt-auto">
-            <a class="nav-link text-white d-flex align-items-center" href="..\index.php" data-bs-toggle="tooltip"
+            <a class="nav-link text-white d-flex align-items-center" href="..\action\logout.php" data-bs-toggle="tooltip"
                 data-bs-placement="right" title="登出">
-
-                <a class="nav-link" href="..\action\logout.php">🚪 登出</a>
+                🚪
+                <span class="ms-2 sidebar-text">登出</span>
             </a>
         </div>
 

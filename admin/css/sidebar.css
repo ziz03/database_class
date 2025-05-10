@@ -6,7 +6,8 @@
 }
 
 #sidebar.collapsed {
-  width: 80px;
+  width: 50px; /* 隱藏側邊欄時的寬度 */
+  overflow: hidden;
 }
 
 /* 隱藏文字 */

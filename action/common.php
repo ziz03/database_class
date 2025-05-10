@@ -112,12 +112,19 @@ function getProductSearchResults($conn, $table = 'products', $searchFields = ['n
 }
 
 
-function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '')
+function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '', $limit = 0)
 {
-    if ($result && $result->num_rows > 0)
-     {
+    if ($result && $result->num_rows > 0) {
+        // 計算總商品數
+        $totalProducts = $result->num_rows;
+        // 計數器
+        $count = 0;
         
         while ($product = $result->fetch_assoc()) {
+            // 如果設定了限制且已達到限制數量，則跳出迴圈
+            if ($limit > 0 && $count >= $limit) {
+                break;
+            }
             
             $image_url = $product['image_url'];
             
@@ -142,19 +149,31 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                     </div>
                 </div>
             </div>
-<?php
+    <?php
+            // 增加計數器
+            $count++;
         }
 
-    
+        // 顯示搜尋結果資訊
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center mt-3">';
-            echo '<p>找到 ' . $result->num_rows . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品</p>';
+            if ($limit > 0 && $totalProducts > $limit) {
+                echo '<p>找到 ' . $totalProducts . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品，顯示前 ' . $limit . ' 個</p>';
+            } else {
+                echo '<p>找到 ' . $totalProducts . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品</p>';
+            }
+            echo '</div>';
+        }
+        
+        // 如果有限制且總數超過限制，顯示「查看更多」按鈕
+        if ($limit > 0 && $totalProducts > $limit) {
+            echo '<div class="col-12 text-center mt-3">';
+            echo '<a href="search.php?keyword=' . urlencode($keyword) . '" class="btn btn-outline-primary">查看全部結果</a>';
             echo '</div>';
         }
     } 
-    else
-     {
-        
+    else {
+        // 沒有找到商品時的顯示
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center"><p>沒有找到符合 "' . htmlspecialchars($keyword) . '" 的商品</p></div>';
         } else {
