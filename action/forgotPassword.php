@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])) {
     if ($user) {
         $_SESSION['reset_email'] = $email;
         $step = 'password';
+        header("Location: ../forgotPassword.php?step=password");
     } else {
         $error = '查無此帳號';
     }

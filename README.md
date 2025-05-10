@@ -133,3 +133,6 @@ NPTU class 需要
 
 ### by ZJ 2025/05/10 12:27 
 ---
+### allproduct裡面分頁功能改好了(一頁limit=3)
+- forgotpwd的bug修好了
+### by ziz 2025/05/10  23:22

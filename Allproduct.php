@@ -23,30 +23,31 @@ if (!isset($_SESSION['user_id'])) {
     <div class="wrapper d-flex flex-column min-vh-100">
         <?php include 'compoents/nav.php'; ?>
         <section id="products" class="py-5 mb-5">
-        <div class="container-fluid">
-            <h2 class="mb-4">
-                <?php
-                if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-                    echo '搜尋結果：' . htmlspecialchars($_GET['keyword']);
-                } else {
-                    echo '所有產品';
-                }
-                ?>
-            </h2>
-            <div class="row g-4 justify-content-center">
-                <?php
-                // 檢查是否有搜尋關鍵字
-                $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+            <div class="container-fluid">
+                <h2 class="mb-4">
+                    <?php
+                    if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+                        echo '搜尋結果：' . htmlspecialchars($_GET['keyword']);
+                    } else {
+                        echo '所有產品';
+                    }
 
-                // 使用搜尋函數獲取結果
-                $result = getProductSearchResults($conn, 'products', ['name', 'description'], $keyword);
-
-                // 使用現有函數顯示產品列表
-                displayProductsList($result, '暫無商品', $keyword);
-                ?>
+                    ?>
+                </h2>
+                <div class="row g-4 justify-content-center">
+                    <?php
+                    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+                    // 檢查是否有搜尋關鍵字
+                    $keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+                    // 使用搜尋函數獲取結果
+                    $totalProducts = 0; // 新增變數保存總產品數
+                    $result = getProductSearchResults($conn, 'products', ['name', 'description'], $keyword, $page, 3, $totalProducts);
+                    // 使用現有函數顯示產品列表
+                    displayProductsList($result, '暫無商品', $keyword, 3, $page, $totalProducts);
+                    ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
         <?php include 'compoents/footer.php'; ?>
     </div>
 </body>

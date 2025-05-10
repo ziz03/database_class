@@ -48,7 +48,8 @@ function get_user_byemail($email)
 {
     global $conn;
     check_login();
-    $sql = "SELECT  name, role FROM user WHERE email = '$email'";;
+    $sql = "SELECT  name, role FROM user WHERE email = '$email'";
+    ;
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         $all_rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -62,7 +63,7 @@ function get_user_byemail($email)
 function displaySearchForm($formClass = '', $inputClass = '', $buttonClass = 'btn-outline-primary', $placeholder = '搜尋商品名稱或描述', $buttonText = '搜尋')
 {
     $keyword = isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '';
-?>
+    ?>
     <div class="row mb-10">
         <div class="col-md-12 mx-auto">
             <form method="GET" class="d-flex <?php echo $formClass; ?>">
@@ -76,15 +77,49 @@ function displaySearchForm($formClass = '', $inputClass = '', $buttonClass = 'bt
 }
 
 
-function getProductSearchResults($conn, $table = 'products', $searchFields = ['name', 'description'], $keyword = '')
+function getProductSearchResults($conn, $table = 'products', $searchFields = ['name', 'description'], $keyword = '', $page = 1, $limit = 4, &$totalProducts = 0)
 {
-    
-    if (!isset($_GET['keyword']) || empty(trim($keyword))) {
-        $sql = "SELECT * FROM $table";
-        return $conn->query($sql);
+    // 計算開始的商品數量
+    $offset = ($page - 1) * $limit;
+    // 移除調試代碼
+    // echo '屌你老母' . $offset;
+
+    // 計算總產品數
+    if (empty(trim($keyword))) {
+        $countSql = "SELECT COUNT(*) as total FROM $table";
+        $countStmt = $conn->prepare($countSql);
+        $countStmt->execute();
+    } else {
+        $searchClauses = [];
+        $countParams = [];
+        $types = '';
+
+        foreach ($searchFields as $field) {
+            $searchClauses[] = "$field LIKE ?";
+            $countParams[] = "%" . trim($keyword) . "%";
+            $types .= 's';
+        }
+
+        $countSql = "SELECT COUNT(*) as total FROM $table WHERE " . implode(' OR ', $searchClauses);
+        $countStmt = $conn->prepare($countSql);
+        $countStmt->bind_param($types, ...$countParams);
+        $countStmt->execute();
     }
 
-    
+    $countResult = $countStmt->get_result();
+    $row = $countResult->fetch_assoc();
+    $totalProducts = $row['total'];
+    $countStmt->close();
+
+    // 其餘原有代碼不變
+    if (empty(trim($keyword))) {
+        $sql = "SELECT * FROM $table LIMIT ?, ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $offset, $limit);
+        $stmt->execute();
+        return $stmt->get_result();
+    }
+
     $searchClauses = [];
     $params = [];
     $types = '';
@@ -92,16 +127,16 @@ function getProductSearchResults($conn, $table = 'products', $searchFields = ['n
     foreach ($searchFields as $field) {
         $searchClauses[] = "$field LIKE ?";
         $params[] = "%" . trim($keyword) . "%";
-        $types .= 's'; 
+        $types .= 's';
     }
 
-    $sql = "SELECT * FROM $table WHERE " . implode(' OR ', $searchClauses);
+    $sql = "SELECT * FROM $table WHERE " . implode(' OR ', $searchClauses) . " LIMIT ?, ?";
 
-    
     $stmt = $conn->prepare($sql);
     if ($stmt) {
-        
-        $stmt->bind_param($types, ...$params);
+        $params[] = $offset;
+        $params[] = $limit;
+        $stmt->bind_param($types . 'ii', ...$params);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -112,22 +147,13 @@ function getProductSearchResults($conn, $table = 'products', $searchFields = ['n
 }
 
 
-function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '', $limit = 3)
+
+function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '', $limit = 3, $page = 1, $totalProducts = 0)
 {
     if ($result && $result->num_rows > 0) {
-        // 計算總商品數
-        $totalProducts = $result->num_rows;
-        // 計數器
-        $count = 0;
-        
+        // 移除計數器和重複的限制邏輯
         while ($product = $result->fetch_assoc()) {
-            // 如果設定了限制且已達到限制數量，則跳出迴圈
-            if ($limit > 0 && $count >= $limit) {
-                break;
-            }
-            
             $image_url = $product['image_url'];
-            
             if (strpos($image_url, '../') === 0) {
                 $image_url = substr($image_url, 1); 
             }
@@ -150,29 +176,32 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                 </div>
             </div>
     <?php
-            // 增加計數器
-            $count++;
         }
 
         // 顯示搜尋結果資訊
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center mt-3">';
-            if ($limit > 0 && $totalProducts > $limit) {
-                echo '<p>找到 ' . $totalProducts . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品，顯示前 ' . $limit . ' 個</p>';
-            } else {
-                echo '<p>找到 ' . $totalProducts . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品</p>';
+            echo '<p>找到 ' . $totalProducts . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品，當前顯示第 ' . $page . ' 頁</p>';
+            echo '</div>';
+        }
+
+        // 顯示分頁 - 使用正確的總產品數
+        $totalPages = ceil($totalProducts / $limit);
+        if ($totalPages > 1) {
+            echo '<div class="col-12 text-center mt-3">';
+            // 保留所有現有 GET 參數
+            $queryParams = $_GET;
+            
+            for ($i = 1; $i <= $totalPages; $i++) {
+                $queryParams['page'] = $i;
+                $queryString = http_build_query($queryParams);
+                
+                $activeClass = ($i == $page) ? 'btn-primary' : 'btn-outline-primary';
+                echo '<a href="?' . $queryString . '" class="btn ' . $activeClass . ' btn-sm mx-1">' . $i . '</a> ';
             }
             echo '</div>';
         }
-        
-        // 如果有限制且總數超過限制，顯示「查看更多」按鈕
-        if ($limit > 0 && $totalProducts > $limit) {
-            echo '<div class="col-12 text-center mt-3">';
-            echo '<a href="search.php?keyword=' . urlencode($keyword) . '" class="btn btn-outline-primary">查看全部結果</a>';
-            echo '</div>';
-        }
-    } 
-    else {
+    } else {
         // 沒有找到商品時的顯示
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center"><p>沒有找到符合 "' . htmlspecialchars($keyword) . '" 的商品</p></div>';
