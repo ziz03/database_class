@@ -218,3 +218,12 @@
 ### `allproduct`裡面分頁功能改好了(一頁limit=3)
 - `forgotpwd`的bug修好了
 ### by ziz 2025/05/10  23:22
+---
+### 新增 cart.php 購物車庫存顯示功能 
+![功能](readmeimg/cart1.png)
+### 修改 action/cart.php "update" function
+### 新增 action/checkout_process.php 庫存檢查 function
+### 新增 checkout.php 庫存不足無法下單及警告提示
+![功能](readmeimg/checkout.png)
+
+### by 77 2025/05/11 00:02
