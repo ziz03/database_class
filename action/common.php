@@ -112,7 +112,7 @@ function getProductSearchResults($conn, $table = 'products', $searchFields = ['n
 }
 
 
-function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '', $limit = 0)
+function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '', $limit = 3)
 {
     if ($result && $result->num_rows > 0) {
         // 計算總商品數
