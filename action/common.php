@@ -48,8 +48,7 @@ function get_user_byemail($email)
 {
     global $conn;
     check_login();
-    $sql = "SELECT  name, role FROM user WHERE email = '$email'";
-    ;
+    $sql = "SELECT  name, role FROM user WHERE email = '$email'";;
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         $all_rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -63,7 +62,7 @@ function get_user_byemail($email)
 function displaySearchForm($formClass = '', $inputClass = '', $buttonClass = 'btn-outline-primary', $placeholder = '搜尋商品名稱或描述', $buttonText = '搜尋')
 {
     $keyword = isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '';
-    ?>
+?>
     <div class="row mb-10">
         <div class="col-md-12 mx-auto">
             <form method="GET" class="d-flex <?php echo $formClass; ?>">
@@ -156,7 +155,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
             if (strpos($image_url, '../') === 0) {
                 $image_url = substr($image_url, 1);
             }
-            ?>
+    ?>
             <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="card h-100 text-center" style="max-width: 300px; margin: 0 auto;">
                     <img src="<?= htmlspecialchars($image_url) ?>" class="card-img-top"
@@ -173,7 +172,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                     </div>
                 </div>
             </div>
-            <?php
+        <?php
         }
 
         // 搜尋提示
@@ -254,7 +253,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                     }
                 }
             </script>
-        <?php endif;
+<?php endif;
     } else {
         // 無商品
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
@@ -263,4 +262,26 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
             echo '<div class="col-12 text-center"><p>' . $noResultsMessage . '</p></div>';
         }
     }
+}
+
+
+function getaboutme()
+{
+    global $conn;
+    $sql = "SELECT ut.*, u.name 
+            FROM user_texts ut 
+            JOIN user u ON ut.userId = u.id";
+
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("SQL prepare failed: " . $conn->error);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $user_text = [];
+    while ($row = $result->fetch_assoc()) {
+        $user_text[] = $row;
+    }
+    return $user_text;
 }
