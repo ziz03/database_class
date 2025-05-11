@@ -242,6 +242,6 @@
 - Allproduct.php原本要Login現在不用了
 by ziz 2025/05/11 19:10
 ---
-###  dashboard.php 新增關於我們
+###  dashboard.php 新增關於我們(尚未完善)
 ### by ZJ 2025/05/11 23:32
 ---
