@@ -33,6 +33,14 @@ if (!isset($_SESSION['user_id'])) {
                     }
 
                     ?>
+                    <?php if (isset($_GET['keyword'])): ?>
+                        <div class="mb-4">
+                            <a href="Allproduct.php"
+                                class="btn btn-outline-dark px-4 py-2 rounded-pill shadow-sm d-inline-flex align-items-center gap-2">
+                                <i class="bi bi-arrow-repeat"></i> 回到所有產品首頁
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 </h2>
                 <div class="row g-4 justify-content-center">
                     <?php

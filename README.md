@@ -230,3 +230,10 @@
 ![功能](readmeimg/checkout.png)
 
 ### by 77 2025/05/11 00:02
+### admin後臺管理查看訂單增加可以看到商品名稱並修正ID一律從1開始increment
+- admin/products.php也是ID從1開始，並增加分頁功能，還有搜尋功能。另外搜尋以後還有跳轉回一開始的按鈕
+- 所有商品裡面的分頁功能也弄好了，還有+可以輸入頁碼跳轉跟回到首頁
+- 所有產品的搜尋功能也有增加回到所有產品首頁的按鈕
+- 美觀性可以再討論
+![功能](readmeing/products.png)
+![功能](readmeing/orders.png)

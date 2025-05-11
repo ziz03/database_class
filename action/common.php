@@ -151,13 +151,12 @@ function getProductSearchResults($conn, $table = 'products', $searchFields = ['n
 function displayProductsList($result, $noResultsMessage = '暫無商品', $keyword = '', $limit = 3, $page = 1, $totalProducts = 0)
 {
     if ($result && $result->num_rows > 0) {
-        // 移除計數器和重複的限制邏輯
         while ($product = $result->fetch_assoc()) {
             $image_url = $product['image_url'];
             if (strpos($image_url, '../') === 0) {
-                $image_url = substr($image_url, 1); 
+                $image_url = substr($image_url, 1);
             }
-    ?>
+            ?>
             <div class="col-sm-6 col-md-3 col-lg-3">
                 <div class="card h-100 text-center" style="max-width: 300px; margin: 0 auto;">
                     <img src="<?= htmlspecialchars($image_url) ?>" class="card-img-top"
@@ -165,8 +164,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                     <div class="card-body">
                         <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
                         <p class="card-text text-danger fw-bold">$<?= number_format($product['price']) ?></p>
-                        <a href="product.php?product_id=<?= $product['id'] ?>"
-                            class="btn btn-outline-primary btn-sm">查看詳情</a>
+                        <a href="product.php?product_id=<?= $product['id'] ?>" class="btn btn-outline-primary btn-sm">查看詳情</a>
                         <form method="POST" action="action/cart.php" class="mt-2">
                             <input type="hidden" name="action" value="add">
                             <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
@@ -175,34 +173,90 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                     </div>
                 </div>
             </div>
-    <?php
+            <?php
         }
 
-        // 顯示搜尋結果資訊
+        // 搜尋提示
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center mt-3">';
             echo '<p>找到 ' . $totalProducts . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品，當前顯示第 ' . $page . ' 頁</p>';
             echo '</div>';
         }
 
-        // 顯示分頁 - 使用正確的總產品數
+        // 分頁
         $totalPages = ceil($totalProducts / $limit);
-        if ($totalPages > 1) {
-            echo '<div class="col-12 text-center mt-3">';
-            // 保留所有現有 GET 參數
-            $queryParams = $_GET;
-            
-            for ($i = 1; $i <= $totalPages; $i++) {
-                $queryParams['page'] = $i;
-                $queryString = http_build_query($queryParams);
-                
-                $activeClass = ($i == $page) ? 'btn-primary' : 'btn-outline-primary';
-                echo '<a href="?' . $queryString . '" class="btn ' . $activeClass . ' btn-sm mx-1">' . $i . '</a> ';
-            }
-            echo '</div>';
-        }
+        if ($totalPages > 1): ?>
+            <div class="col-12 mt-5">
+                <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 p-3 rounded shadow-sm border bg-light">
+                    <!-- 頁碼列 -->
+                    <ul class="pagination gap-4 justify-content-center flex-wrap">
+                        <!-- 首頁 -->
+                        <li class="page-item me-2<?= ($page <= 1) ? 'disabled' : '' ?>">
+                            <a class="page-link rounded-pill"
+                                href="?page=1<?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">首頁</a>
+                        </li>
+
+                        <!-- 上一頁 -->
+                        <li class="page-item me-2<?= ($page <= 1) ? 'disabled' : '' ?>">
+                            <a class="page-link rounded-pill"
+                                href="?page=<?= max(1, $page - 1) ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">上一頁</a>
+                        </li>
+
+                        <!-- 動態頁碼 -->
+                        <?php
+                        $maxShow = 5; // 最多顯示頁碼數
+                        $start = max(1, $page - floor($maxShow / 2));
+                        $end = min($totalPages, $start + $maxShow - 1);
+                        if ($end - $start < $maxShow - 1)
+                            $start = max(1, $end - $maxShow + 1);
+                        for ($i = $start; $i <= $end; $i++): ?>
+                            <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                <a class="page-link rounded-pill"
+                                    href="?page=<?= $i ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <!-- 下一頁 -->
+                        <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
+                            <a class="page-link rounded-pill"
+                                href="?page=<?= min($totalPages, $page + 1) ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">下一頁</a>
+                        </li>
+                    </ul>
+
+                    <!-- 跳轉頁碼 -->
+                    <form class="d-flex align-items-center gap-2 ms-3" onsubmit="return jumpToPage(event)">
+                        <label class="mb-3">跳至：</label>
+                        <input type="number" id="gotoPage" min="1" max="<?= $totalPages ?>" class="form-control form-control-sm mb-3"
+                            placeholder="頁碼" style="width: 80px;">
+                        <button class="btn btn-sm btn-outline-primary rounded-pill mb-3" type="submit">跳轉</button>
+                        <?php
+                        foreach ($_GET as $key => $value) {
+                            if ($key !== 'page' && $key !== 'gotoPage') {
+                                echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                            }
+                        }
+                        ?>
+                    </form>
+                </div>
+            </div>
+
+            <script>
+                function jumpToPage(e) {
+                    e.preventDefault();
+                    const input = document.getElementById('gotoPage');
+                    const page = parseInt(input.value);
+                    if (!isNaN(page) && page >= 1 && page <= <?= $totalPages ?>) {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        urlParams.set('page', page);
+                        window.location.href = '?' + urlParams.toString();
+                    } else {
+                        alert("請輸入 1 到 <?= $totalPages ?> 的頁碼");
+                    }
+                }
+            </script>
+        <?php endif;
     } else {
-        // 沒有找到商品時的顯示
+        // 無商品
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
             echo '<div class="col-12 text-center"><p>沒有找到符合 "' . htmlspecialchars($keyword) . '" 的商品</p></div>';
         } else {

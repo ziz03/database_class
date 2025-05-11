@@ -44,7 +44,6 @@ if ($search !== '') {
         $stmt->close();
 
         if (count($orders) > 0) {
-            // 取得總筆數
             $stmt = $conn->prepare("SELECT COUNT(*) as total FROM orders WHERE recipient_phone LIKE ?");
             $stmt->bind_param("s", $likeSearch);
             $stmt->execute();
@@ -77,7 +76,7 @@ $total_pages = ceil($total_orders / $limit);
 <head>
     <meta charset="UTF-8">
     <title>訂單列表</title>
-<link rel="icon" href="../image\blackLOGO.png">
+    <link rel="icon" href="../image\blackLOGO.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/sidebar.css">
@@ -108,13 +107,32 @@ $total_pages = ceil($total_orders / $limit);
                     <th>收件人姓名</th>
                     <th>收件人電話</th>
                     <th>收件人地址</th>
+                    <th>商品名稱</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (count($orders) > 0): ?>
+                    <?php $display_id = ($page - 1) * $limit + 1; ?>
                     <?php foreach ($orders as $order): ?>
+                        <?php
+                        // 查詢商品名稱
+                        $stmt = $conn->prepare("
+                            SELECT products.name 
+                            FROM order_items 
+                            JOIN products ON order_items.product_id = products.id 
+                            WHERE order_items.order_id = ?
+                        ");
+                        $stmt->bind_param("i", $order['id']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $product_names = [];
+                        while ($row = $result->fetch_assoc()) {
+                            $product_names[] = $row['name'];
+                        }
+                        $stmt->close();
+                        ?>
                         <tr>
-                            <td><?= htmlspecialchars($order['id']) ?></td>
+                            <td><?= $display_id++ ?></td>
                             <td><?= htmlspecialchars($order['user_id']) ?></td>
                             <td><?= htmlspecialchars($order['total_price']) ?></td>
                             <td><?= htmlspecialchars($order['status']) ?></td>
@@ -122,11 +140,12 @@ $total_pages = ceil($total_orders / $limit);
                             <td><?= htmlspecialchars($order['recipient_name']) ?></td>
                             <td><?= htmlspecialchars($order['recipient_phone']) ?></td>
                             <td><?= nl2br(htmlspecialchars($order['recipient_address'])) ?></td>
+                            <td><?= htmlspecialchars(implode(', ', $product_names)) ?></td>     
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="8" class="text-center">目前沒有訂單資料。</td>
+                        <td colspan="9" class="text-center">目前沒有訂單資料。</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
