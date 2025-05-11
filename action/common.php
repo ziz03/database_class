@@ -228,7 +228,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                         <label class="mb-3">跳至：</label>
                         <input type="number" id="gotoPage" min="1" max="<?= $totalPages ?>" class="form-control form-control-sm mb-3"
                             placeholder="頁碼" style="width: 80px;">
-                        <button class="btn btn-sm btn-outline-primary rounded-pill mb-3" type="submit">跳轉</button>
+                        <button class="btn btn-sm btn-outline-primary rounded-pill mb-3" type="submit">前往</button>
                         <?php
                         foreach ($_GET as $key => $value) {
                             if ($key !== 'page' && $key !== 'gotoPage') {
