@@ -2,6 +2,9 @@
 session_start();
 require_once '../action/database.php';
 require_once 'compoents/breadcrumb.php';
+require_once('../action/common.php');
+$userName = check_login();
+
 
 // 處理表單提交
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

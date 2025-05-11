@@ -2,6 +2,8 @@
 session_start();
 require_once '../action/database.php';
 require_once 'compoents/breadcrumb.php';
+require_once('../action/common.php');
+$userName = check_login();
 
 // 取得目前頁數
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
