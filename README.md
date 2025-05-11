@@ -238,4 +238,7 @@
 ![功能](readmeimg/products.png)
 
 ![功能](readmeimg/orders.png)
+
+- Allproduct.php原本要Login現在不用了
+by ziz 2025/05/11 19:10
 ---
