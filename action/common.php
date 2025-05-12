@@ -281,7 +281,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
 function getaboutme()
 {
     global $conn;
-    $sql = "SELECT ut.*, u.name 
+    $sql = "SELECT ut.*, u.name, u.email
             FROM user_texts ut 
             JOIN user u ON ut.userId = u.id";
 
