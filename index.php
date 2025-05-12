@@ -71,7 +71,7 @@ require_once 'action/common.php';
                 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
                 $totalProducts = $result ? $result->num_rows : 0;
                 // 使用現有函數顯示產品列表
-                displayProductsList($result, '暫無商品', $keyword, $limit, $page, );
+                displayProductsList($result, '暫無商品', $keyword, $limit, $page, $totalProducts);
                 ?>
             </div>
         </div>

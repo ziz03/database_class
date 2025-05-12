@@ -165,13 +165,13 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                         <h5 class="card-title fw-semibold"><?= htmlspecialchars($product['name']) ?></h5>
                         <p class="text-danger fw-bold mb-2">$<?= number_format($product['price']) ?></p>
                         <div class="mt-auto">
-                            <!-- 文青風查看詳情按鈕 -->
+                            <!-- 查看詳情按鈕 -->
                             <a href="product.php?product_id=<?= $product['id'] ?>" class="btn w-100 mb-2 rounded-pill shadow-sm"
                                 style="font-family: 'Noto Serif TC', serif; font-size: 0.875rem; background-color: #f4f1ea; color: #4a4a4a; border: 1px solid #d8cfc4; transition: all 0.3s ease-in-out;">
                                 查看詳情
                             </a>
 
-                            <!-- 文青風加入購物車按鈕 -->
+                            <!-- 加入購物車按鈕 -->
                             <form method="POST" action="action/cart.php">
                                 <input type="hidden" name="action" value="add">
                                 <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
