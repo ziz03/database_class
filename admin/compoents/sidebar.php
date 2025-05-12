@@ -36,7 +36,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                                 class="nav-link text-white <?php echo ($current_page == 'products.php') ? 'fw-bold' : ''; ?>">商品管理列表</a>
                         </li>
                         <li><a href="product_add.php" class="nav-link text-white">新增商品</a></li>
-                        
+
                         <li> <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'orders.php') ? 'active bg-primary rounded' : ''; ?>"
                                 href="view_order.php" data-bs-toggle="tooltip" data-bs-placement="right" title="查看訂單">
                                 查看訂單
@@ -50,6 +50,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     href="changestatus.php" data-bs-toggle="tooltip" data-bs-placement="right" title="調整權限">
                     📊
                     <span class="ms-2 sidebar-text">調整權限</span>
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'changeaboutme.php') ? 'active bg-primary rounded' : ''; ?>"
+                    href="changeaboutme.php" data-bs-toggle="tooltip" data-bs-placement="right" title="調整關於我">
+                    🍟
+                    <span class="ms-2 sidebar-text">調整關於我</span>
                 </a>
             </li>
             <li class="nav-item mb-2">
