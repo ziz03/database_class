@@ -1,6 +1,5 @@
 <?php
 session_start();
-// 放在 login.php 頁面的適當位置（通常在 <body> 標籤內的開始處）
 if (isset($_GET['error'])) {
     $error = $_GET['error'];
     echo '<script>alert("' . $error . '");</script>';
@@ -8,81 +7,119 @@ if (isset($_GET['error'])) {
 $step = isset($_SESSION['reset_email']) ? 'password' : 'email';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>忘記密碼</title>
-    <link rel="icon" href="image\blackLOGO.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>忘記密碼 | 人生研究室</title>
+    <link rel="icon" href="image/blackLOGO.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f6f2;
+            font-family: 'Noto Serif TC', serif;
+            color: #3e3e3e;
+        }
+
+        .custom-card {
+            background: #faf8f5;
+            border: 1px solid #eae5df;
+            border-radius: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .form-control {
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .btn-dark {
+            background-color: #3e3e3e;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-dark:hover {
+            background-color: #000;
+        }
+
+        .btn-outline-dark:hover {
+            background-color: #3e3e3e;
+            color: white;
+        }
+
+        h1,
+        h4 {
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
-    <?php
-    include 'compoents/nav.php';
-    ?>
+    <?php include 'compoents/nav.php'; ?>
 
-    <section name="login">
-        <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center">
-            <div class="card shadow w-100" style="max-width: 900px;">
-                <div class="row g-0">
-
-                    <!-- 左邊登入表單 -->
-                    <!-- 左邊表單區 -->
-                    <div class="col-md-6 d-flex align-items-center justify-content-center">
-                        <div class="p-4 w-100" style="max-width: 400px;">
-
-                            <?php if ($step === 'email'): ?>
-                                <h4 class="mb-3">拯救你的密碼</h4>
-                                <hr>
-                                <form action="action/forgotPassword.php" method="post">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">帳號</label>
-                                        <input type="text" class="form-control form-control-lg" id="email" name="email" placeholder="請輸入帳號(email)" required>
-                                    </div>
-                                    <div class="d-grid mb-3">
-                                        <button type="submit" class="btn btn-dark btn-lg">送出</button>
-                                    </div>
-                                    <div class="d-grid mb-3">
-                                        <a href="login.php" class="btn btn-outline-dark btn-lg">突然就想起來了</a>
-                                    </div>
-                                </form>
-                            <?php elseif ($step === 'password'): ?>
-                                <h4 class="mb-3">請輸入新密碼</h4>
-                                <hr>
-                                <form action="action/forgotPassword.php" method="post">
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">新密碼</label>
-                                        <input type="password" class="form-control form-control-lg" id="password" name="password" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="confirm" class="form-label">確認密碼</label>
-                                        <input type="password" class="form-control form-control-lg" id="confirm" name="confirm" required>
-                                    </div>
-                                    <div class="d-grid mb-3">
-                                        <button type="submit" class="btn btn-success btn-lg">更新密碼</button>
-                                    </div>
-                                </form>
-                            <?php endif; ?>
-
-                        </div>
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="custom-card p-5 mx-auto" style="max-width: 960px;">
+                <div class="row g-4 align-items-center">
+                    <!-- 左側表單 -->
+                    <div class="col-md-6">
+                        <?php if ($step === 'email'): ?>
+                            <h4 class="mb-3">拯救你的密碼</h4>
+                            <p class="mb-4 text-muted">請輸入您的帳號，協助我們確認。</p>
+                            <form action="action/forgotPassword.php" method="post">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">帳號（Email）</label>
+                                    <input type="text" class="form-control" id="email" name="email"
+                                        placeholder="請輸入帳號(email)" required>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-dark btn-lg rounded-pill">送出</button>
+                                    <a href="login.php" class="btn btn-outline-dark btn-lg rounded-pill">突然就想起來了</a>
+                                </div>
+                            </form>
+                        <?php elseif ($step === 'password'): ?>
+                            <h4 class="mb-3">請輸入新密碼</h4>
+                            <p class="mb-4 text-muted">請輸入您的新密碼並再次確認。</p>
+                            <form action="action/forgotPassword.php" method="post">
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">新密碼</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm" class="form-label">確認密碼</label>
+                                    <input type="password" class="form-control" id="confirm" name="confirm" required>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-dark btn-lg rounded-pill">更新密碼</button>
+                                </div>
+                            </form>
+                        <?php endif; ?>
                     </div>
-                    <!-- 右邊品牌區塊 -->
-                    <div class="col-md-6 text-white d-flex align-items-center justify-content-center flex-column p-4" style="background-color:black;">
-                        <img src="image\blackLOGO.png" alt="NOTORIOUS" class="mb-3" style="max-width: 300px;">
+
+                    <!-- 右側品牌介紹 -->
+                    <div class="col-md-6 d-flex flex-column justify-content-center align-items-center p-5"
+                        style="background-color: #faf8f5; color: #4a3f35;">
+                        <i class="bi bi-book-half fs-2 mb-3" style="color: #6e5843;"></i>
+                        <h3 class="fw-bold mb-2">人生研究室</h3>
+                        <p class="text-center mb-4" style="max-width: 300px;">
+                            密碼會忘記，<br>
+                            讀過的書卻會在舉手投足之間影響著，<br>伴隨流過的血液。
+                        </p>
+                        <blockquote class="text-muted fst-italic" style="max-width: 280px;">
+                            “Knowing yourself is the beginning of all wisdom.” <br>    - Aristotle
+                        </blockquote>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-
-    <?php
-    include 'compoents/footer.php';
-    ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <?php include 'compoents/footer.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

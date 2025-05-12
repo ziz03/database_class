@@ -17,6 +17,7 @@ require_once 'action/common.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
 
+
 </head>
 
 <body>
@@ -51,7 +52,10 @@ require_once 'action/common.php';
 
         <div class="container-fluid">
             <h2 class="mb-4 text-center fw-bold border-bottom pb-2">
-                <i class="bi bi-book-half me-2 text-primary"></i>
+                <p class="text-muted">
+                    <i class="bi bi-pen me-0" style="color: #967259;"></i>
+                       不讀書而有遠見，那是奢望<br>讀書而有遠見，就不是偶然。
+                </p>
                 <?php
                 if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
                     echo '搜尋結果：' . htmlspecialchars($_GET['keyword']);
