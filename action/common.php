@@ -14,7 +14,7 @@ function logoutAndRedirect($redirectUrl = '../index.php')
 }
 function check_login()
 {
-    // 檢查是否有登入
+
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         if ($_SESSION['role'] == 'user') {
             header("Location: ../index.php");
@@ -38,7 +38,7 @@ function get_user()
     // }
     if ($result && $result->num_rows > 0) {
         $all_rows = $result->fetch_all(MYSQLI_ASSOC);
-        // print_r($all_rows); // 印出全部資料
+        // print_r($all_rows); 
         return $all_rows;
     } else {
         return null; // 找不到這個 user
@@ -48,11 +48,12 @@ function get_user_byemail($email)
 {
     global $conn;
     check_login();
-    $sql = "SELECT  name, role FROM user WHERE email = '$email'";;
+    $sql = "SELECT  name, role FROM user WHERE email = '$email'";
+    ;
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         $all_rows = $result->fetch_all(MYSQLI_ASSOC);
-        print_r($all_rows); // 印出全部資料
+        print_r($all_rows);
         return $all_rows;
     } else {
         return null; // 找不到這個 user
@@ -62,7 +63,7 @@ function get_user_byemail($email)
 function displaySearchForm($formClass = '', $inputClass = '', $buttonClass = 'btn-outline-primary', $placeholder = '搜尋商品名稱或描述', $buttonText = '搜尋')
 {
     $keyword = isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '';
-?>
+    ?>
     <div class="row mb-10">
         <div class="col-md-12 mx-auto">
             <form method="GET" class="d-flex <?php echo $formClass; ?>">
@@ -155,24 +156,35 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
             if (strpos($image_url, '../') === 0) {
                 $image_url = substr($image_url, 1);
             }
-    ?>
-            <div class="col-sm-6 col-md-3 col-lg-3">
-                <div class="card h-100 text-center" style="max-width: 300px; margin: 0 auto;">
+            ?>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
                     <img src="<?= htmlspecialchars($image_url) ?>" class="card-img-top"
-                        alt="<?= htmlspecialchars($product['name']) ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
-                        <p class="card-text text-danger fw-bold">$<?= number_format($product['price']) ?></p>
-                        <a href="product.php?product_id=<?= $product['id'] ?>" class="btn btn-outline-primary btn-sm">查看詳情</a>
-                        <form method="POST" action="action/cart.php" class="mt-2">
-                            <input type="hidden" name="action" value="add">
-                            <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                            <button type="submit" class="btn btn-primary btn-sm">加入購物車</button>
-                        </form>
+                        alt="<?= htmlspecialchars($product['name']) ?>" style="height: 200px; object-fit: contain;">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                        <h5 class="card-title fw-semibold"><?= htmlspecialchars($product['name']) ?></h5>
+                        <p class="text-danger fw-bold mb-2">$<?= number_format($product['price']) ?></p>
+                        <div class="mt-auto">
+                            <!-- 文青風查看詳情按鈕 -->
+                            <a href="product.php?product_id=<?= $product['id'] ?>" class="btn w-100 mb-2 rounded-pill shadow-sm"
+                                style="font-family: 'Noto Serif TC', serif; font-size: 0.875rem; background-color: #f4f1ea; color: #4a4a4a; border: 1px solid #d8cfc4; transition: all 0.3s ease-in-out;">
+                                查看詳情
+                            </a>
+
+                            <!-- 文青風加入購物車按鈕 -->
+                            <form method="POST" action="action/cart.php">
+                                <input type="hidden" name="action" value="add">
+                                <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                                <button type="submit" class="btn w-100 rounded-pill shadow-sm"
+                                    style="font-family: 'Noto Serif TC', serif; font-size: 0.875rem; background-color: #6c8b74; color: #fff; border: none; transition: all 0.3s ease-in-out;">
+                                    加入購物車
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        <?php
+            <?php
         }
 
         // 搜尋提示
@@ -192,7 +204,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                         <!-- 首頁 -->
                         <li class="page-item me-2<?= ($page <= 1) ? 'disabled' : '' ?>">
                             <a class="page-link rounded-pill"
-                                href="?page=1<?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">首頁</a>
+                                href="?page=1<?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">第一頁</a>
                         </li>
 
                         <!-- 上一頁 -->
@@ -224,9 +236,8 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
 
                     <!-- 跳轉頁碼 -->
                     <form class="d-flex align-items-center gap-2 ms-3" onsubmit="return jumpToPage(event)">
-                        <!-- <label class="mb-3">跳至：</label> -->
-                        <input type="number" id="gotoPage" min="1" max="<?= $totalPages ?>" class="form-control form-control-sm mb-3"
-                            placeholder="頁碼" style="width: 80px;">
+                        <input type="number" id="gotoPage" min="1" max="<?= $totalPages ?>"
+                            class="form-control form-control-sm mb-3" placeholder="頁碼" style="width: 80px;">
                         <button class="btn btn-sm btn-outline-primary rounded-pill mb-3" type="submit">前往</button>
                         <?php
                         foreach ($_GET as $key => $value) {
@@ -253,7 +264,7 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                     }
                 }
             </script>
-<?php endif;
+        <?php endif;
     } else {
         // 無商品
         if (isset($_GET['keyword']) && !empty(trim($keyword))) {
@@ -263,6 +274,8 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
         }
     }
 }
+
+
 
 
 function getaboutme()

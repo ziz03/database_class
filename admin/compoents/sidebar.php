@@ -33,9 +33,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <div class="collapse <?php echo ($current_page == 'products.php') ? 'show' : ''; ?>" id="submenu1">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4 sidebar-text">
                         <li><a href="products.php"
-                                class="nav-link text-white <?php echo ($current_page == 'products.php') ? 'fw-bold' : ''; ?>">產品列表</a>
+                                class="nav-link text-white <?php echo ($current_page == 'products.php') ? 'fw-bold' : ''; ?>">商品管理列表</a>
                         </li>
-                        <li><a href="product_add.php" class="nav-link text-white">新增產品</a></li>
+                        <li><a href="product_add.php" class="nav-link text-white">新增商品</a></li>
                         
                         <li> <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'orders.php') ? 'active bg-primary rounded' : ''; ?>"
                                 href="view_order.php" data-bs-toggle="tooltip" data-bs-placement="right" title="查看訂單">
@@ -47,7 +47,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             <li class="nav-item mb-2">
                 <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'changestatus.php') ? 'active bg-primary rounded' : ''; ?>"
-                    href="changestatus.php" data-bs-toggle="tooltip" data-bs-placement="right" title="更換權限">
+                    href="changestatus.php" data-bs-toggle="tooltip" data-bs-placement="right" title="調整權限">
                     📊
                     <span class="ms-2 sidebar-text">調整權限</span>
                 </a>
