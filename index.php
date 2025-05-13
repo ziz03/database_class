@@ -51,19 +51,21 @@ require_once 'action/common.php';
     <section id="products" class="py-5 mb-5">
 
         <div class="container-fluid">
-            <h2 class="mb-4 text-center fw-bold border-bottom pb-2">
-                <p class="text-muted">
-                    <i class="bi bi-pen me-0" style="color: #967259;"></i>
-                       不讀書而有遠見，那是奢望<br>讀書而有遠見，就不是偶然。
+            <h2 class="mb-4 text-center fw-bold border-bottom pb-3" style="color: #5a4637;">
+                <p class="text-muted mb-3" style="font-size: 1rem;">
+                    <i class="bi bi-pen me-2" style="color: #967259;"></i>
+                    不讀書而有遠見，那是奢望<br>
+                    讀書而有遠見，就不是偶然。
                 </p>
                 <?php
                 if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
-                    echo '搜尋結果：' . htmlspecialchars($_GET['keyword']);
+                    echo '<span class="fs-5">搜尋結果：</span><span class="text-decoration-underline fs-5">' . htmlspecialchars($_GET['keyword']) . '</span>';
                 } else {
-                    echo '推薦好書';
+                    echo '<span class="fs-5">推薦好書</span>';
                 }
                 ?>
             </h2>
+
             <div class="row g-4 justify-content-center">
                 <?php
                 // 檢查是否有搜尋關鍵字
