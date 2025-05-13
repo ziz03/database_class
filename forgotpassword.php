@@ -105,12 +105,16 @@ $step = isset($_SESSION['reset_email']) ? 'password' : 'email';
                         style="background-color: #faf8f5; color: #4a3f35;">
                         <i class="bi bi-book-half fs-2 mb-3" style="color: #6e5843;"></i>
                         <h3 class="fw-bold mb-2">人生研究室</h3>
-                        <p class="text-center mb-4" style="max-width: 300px;">
+                        <blockquote class="text-muted fst-italic text-center"
+                            style="max-width: 300px; font-family: 'Noto Serif TC', serif;">
                             密碼會忘記，<br>
-                            讀過的書卻會在舉手投足之間影響著，<br>伴隨流過的血液。
-                        </p>
+                            讀過的書卻會在舉手投足之間影響著，<br>
+                            伴隨著流過的血液，在每一個鼻息之間。
+
+                        </blockquote>
+
                         <blockquote class="text-muted fst-italic" style="max-width: 280px;">
-                            “Knowing yourself is the beginning of all wisdom.” <br>    - Aristotle
+                            “Knowing yourself is the beginning of all wisdom.” <br> - Aristotle
                         </blockquote>
                     </div>
                 </div>

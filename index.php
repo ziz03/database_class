@@ -18,6 +18,7 @@ require_once 'action/common.php';
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
 
 
+
 </head>
 
 <body>
@@ -37,6 +38,8 @@ require_once 'action/common.php';
             <p class="mb-4" style="font-size: 1.25rem; line-height: 1.8;">
                 用知識品味人生，<br class="d-none d-md-block">用閱讀改變風景。
             </p>
+
+
             <a href="#products" class="btn btn-outline-dark rounded-pill px-4 py-2 shadow-sm" style="
         font-weight: 500;
         letter-spacing: 0.5px;  

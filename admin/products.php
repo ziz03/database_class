@@ -78,18 +78,155 @@ $result = $stmt->get_result();
     <link rel="stylesheet" href="./css/sidebar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <!-- 文青字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .content-wrapper {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-header {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3e3e3e;
+            margin-bottom: 30px;
+        }
+
+        .btn-success {
+            background-color: #6e7a59;
+            border: none;
+            font-size: 1.2rem;
+        }
+
+        .btn-outline-primary {
+            color: #6e7a59;
+            border-color: #6e7a59;
+            font-weight: bold;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #6e7a59;
+            color: #fff;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 0 1rem;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .table th {
+            background-color: #f8f8f8;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .table td {
+            background-color: #fff;
+        }
+
+        .form-control-sm {
+            font-size: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination .page-item {
+            margin: 0 4px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #6e7a59;
+            border-color: #6e7a59;
+            color: white;
+        }
+
+        .pagination .page-link {
+            color: #6e7a59;
+            border-color: #6e7a59;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #6e7a59;
+            color: white;
+        }
+
+        .search-form {
+            max-width: 400px;
+            margin-bottom: 30px;
+        }
+
+        .breadcrumb {
+            background-color: #f8f8f8;
+        }
+
+        .search-form .input-group input {
+            font-size: 1rem;
+        }
+
+        .search-form .input-group button {
+            font-size: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        /* 文青風格按鈕 */
+        .btn-outline-success {
+            color: #4CAF50;
+            /* 深綠色 */
+            border-color: #4CAF50;
+            background-color: #e8f5e9;
+            /* 淺綠色背景 */
+        }
+
+        .btn-outline-success:hover {
+            color: #ffffff;
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .btn-outline-danger {
+            color: #D32F2F;
+            /* 深紅色 */
+            border-color: #D32F2F;
+            background-color: #FFEBEE;
+            /* 淺紅色背景 */
+        }
+
+        .btn-outline-danger:hover {
+            color: #ffffff;
+            background-color: #D32F2F;
+            border-color: #D32F2F;
+        }
+    </style>
 </head>
 
 <body>
     <?php include('compoents/sidebar.php'); ?>
     <div class="content-wrapper flex-grow-1 p-3">
         <?php echo generate_breadcrumb($current_page); ?>
-        <h2>商品管理列表</h2>
+        <h2 class="page-header">商品管理列表</h2>
         <a href="product_add.php" class="btn btn-success mb-3">新增商品</a>
 
         <!-- 搜尋列 -->
-        <form class="mb-3" method="GET" action="products.php">
-            <div class="input-group" style="max-width: 400px;">
+        <form class="search-form" method="GET" action="products.php">
+            <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="搜尋商品名稱"
                     value="<?= htmlspecialchars($search) ?>">
                 <button class="btn btn-outline-primary" type="submit">搜尋</button>
@@ -99,16 +236,12 @@ $result = $stmt->get_result();
         <?php if (isset($_GET['search'])): ?>
             <div class="mb-3">
                 <a href="products.php"
-                    class="btn btn-outline-primary d-flex align-items-center gap-2 px-2 py-2 rounded-pill shadow-sm"
-                    style="max-width: 220px;">
+                    class="btn btn-outline-primary d-flex align-items-center gap-2 px-2 py-2 rounded-pill shadow-sm">
                     <i class="bi bi-arrow-counterclockwise"></i>
                     回到管理商品列表首頁
                 </a>
-
             </div>
         <?php endif; ?>
-
-        </form>
 
         <table class="table table-bordered table-hover">
             <thead>
@@ -140,8 +273,9 @@ $result = $stmt->get_result();
                             <td><?= htmlspecialchars($row['created_at']) ?></td>
                             <td>
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
-                                <button type="submit" name="update_all" class="btn btn-primary btn-sm mt-2">更新資料</button>
-                                <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-danger btn-sm mt-2"
+                                <button type="submit" name="update_all"
+                                    class="btn btn-outline-success btn-sm mt-2">更新資料</button>
+                                <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm mt-2"
                                     onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
                             </td>
                         </form>
@@ -152,7 +286,6 @@ $result = $stmt->get_result();
                         <td colspan="7" class="text-center text-danger">⚠ 無符合的搜尋結果</td>
                     </tr>
                 <?php endif; ?>
-
             </tbody>
         </table>
 

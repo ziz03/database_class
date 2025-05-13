@@ -96,11 +96,12 @@ if (isset($_GET['error'])) {
                         style="background-color: #faf8f5; color: #4a3f35;">
                         <i class="bi bi-book-half fs-2 mb-3" style="color: #6e5843;"></i>
                         <h3 class="fw-bold mb-2">人生研究室</h3>
-                        <p class="text-center mb-4" style="max-width: 300px;">
+                        <blockquote class="text-muted fst-italic text-center"
+                            style="max-width: 300px; font-family: 'Noto Serif TC', serif;">
                             人生的起點不是誕生，<br>
                             而是與好書結緣的那一刻。<br>
-                            
-                        </p>
+                        </blockquote>
+
                         <blockquote class="text-muted fst-italic" style="max-width: 280px;">
                             “The cost of ignorance is always higher than the price of knowledge.” <br>- Margaret Atwood
                         </blockquote>
