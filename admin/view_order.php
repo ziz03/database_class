@@ -84,12 +84,42 @@ $total_pages = ceil($total_orders / $limit);
     <link rel="stylesheet" href="./css/sidebar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <!-- Custom styles for this page -->
+    <style>
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+        .table-bordered {
+            border: 1px solid #ddd;
+        }
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #ddd;
+        }
+        .table-striped tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+        .pagination .page-link {
+            border-radius: 25px;
+            margin: 0 5px;
+        }
+        .form-control {
+            border-radius: 25px;
+        }
+        .btn {
+            border-radius: 25px;
+        }
+    </style>
 </head>
 
 <body>
     <?php include('./compoents/sidebar.php'); ?>
     <div class="container mt-5">
-        <h2>訂單列表</h2>
+        <h2 class="mb-4">訂單列表</h2>
         <form class="d-flex mb-3" method="get" action="">
             <input class="form-control me-2" type="search" placeholder="輸入收件人電話" aria-label="Search" name="search"
                 value="<?= htmlspecialchars($search) ?>">
@@ -100,7 +130,7 @@ $total_pages = ceil($total_orders / $limit);
             <div class="alert alert-warning">找不到訂單。</div>
         <?php endif; ?>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>訂單ID</th>
@@ -144,7 +174,7 @@ $total_pages = ceil($total_orders / $limit);
                             <td><?= htmlspecialchars($order['recipient_name']) ?></td>
                             <td><?= htmlspecialchars($order['recipient_phone']) ?></td>
                             <td><?= nl2br(htmlspecialchars($order['recipient_address'])) ?></td>
-                            <td><?= htmlspecialchars(implode(', ', $product_names)) ?></td>     
+                            <td><?= htmlspecialchars(implode(', ', $product_names)) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else: ?>
@@ -157,7 +187,7 @@ $total_pages = ceil($total_orders / $limit);
 
         <?php if ($total_pages > 1): ?>
             <nav aria-label="Page navigation">
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <?php if ($page > 1): ?>
                         <li class="page-item">
                             <a class="page-link" href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>">上一頁</a>

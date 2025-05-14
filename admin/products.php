@@ -273,9 +273,9 @@ $result = $stmt->get_result();
                             <td><?= htmlspecialchars($row['created_at']) ?></td>
                             <td>
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
-                                <button type="submit" name="update_all"
-                                    class="btn btn-outline-success btn-sm mt-2">更新資料</button>
-                                <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm mt-2"
+                                <button type="submit" name="update_all" class="btn btn-outline-primary btn-sm">更新資料</button>
+
+                                <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm "
                                     onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
                             </td>
                         </form>
