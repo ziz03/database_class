@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name']) && isset($_PO
     // 處理圖片上傳
     $img_url = null;
     if (isset($_FILES['img']) && $_FILES['img']['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = '../uploads/';
+        $upload_dir = '../image/';
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
