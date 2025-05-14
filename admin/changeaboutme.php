@@ -6,7 +6,10 @@ require_once 'compoents/breadcrumb.php';
 $username = check_login();
 $user_text = getaboutme();
 // print_r($user_text);
-$index = 1
+if(isset($_SESSION["message"])){
+    echo "<script>alert('" . $_SESSION["message"] . "');</script>";
+}
+$index = 1;
 ?>
 
 
@@ -77,7 +80,7 @@ $index = 1
                 </div>
                 <div class="modal-body">
                     <!-- 可放修改表單 -->
-                    <form id="editForm" method="POST" action="update_aboutme.php">
+                    <form id="editForm" method="POST" action="../action/update_aboutme.php" enctype="multipart/form-data">
                         <input type="hidden" name="id" id="modalUserId">
                         <div class="mb-3">
                             <label for="modalUserName" class="form-label">名字</label>
@@ -87,12 +90,12 @@ $index = 1
                             <label for="describe" class="form-label">描述</label>
                             <input type="text" class="form-control" name="describe" id="describe">
                             <label for="github" class="form-label">github</label>
-                            <input type="text" class="form-control" name="github" id="github">
+                            <input type="text" class="form-control" name="github_url" id="github_url">
                             <label for="img" class="form-label">img</label>
                             <input type="file" class="form-control" name="img" id="img">
-
+                            <img id="imgPreview" src="" alt="預覽圖片" class="img-fluid mb-2">
                         </div>
-                        <button type="submit" class="btn btn-success">儲存</button>
+                        <button type="submit" class="btn btn-success ">儲存</button>
                     </form>
                 </div>
             </div>
@@ -122,8 +125,8 @@ $index = 1
                 document.getElementById('modalUserName').value = userData.name;
                 document.getElementById('content').value = userData.content;
                 document.getElementById('describe').value = userData.describe;
-                document.getElementById('github').value = userData.github_url;
-                document.getElementById('img').value = userData.img_url;
+                document.getElementById('github_url').value = userData.github_url;
+                document.getElementById('imgPreview').src = userData.img_url;
             });
         });
     </script>
