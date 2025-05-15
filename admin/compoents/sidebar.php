@@ -1,10 +1,10 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
-<div class="d-flex">
-
+<!-- 整體佈局容器 -->
+<div class="d-flex wrapper">
     <!-- Sidebar -->
-    <nav class="bg-dark text-white p-3" id="sidebar">
+    <nav class="bg-dark text-white" id="sidebar">
         <!-- 收合按鈕 -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <span class="fs-4 sidebar-text">選單</span>
@@ -28,7 +28,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     aria-controls="submenu1">
                     📄
                     <span class="ms-2 sidebar-text">產品</span>
-                    <i class="ms-auto bi bi-chevron-down"></i>
+                    <i class="ms-auto bi bi-chevron-down sidebar-text"></i>
                 </a>
                 <div class="collapse <?php echo ($current_page == 'products.php') ? 'show' : ''; ?>" id="submenu1">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small ps-4 sidebar-text">
@@ -74,5 +74,4 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <span class="ms-2 sidebar-text">登出</span>
             </a>
         </div>
-
     </nav>

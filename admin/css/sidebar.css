@@ -1,41 +1,116 @@
-/* sidebar 樣式 */
-#sidebar {
-  width: 250px;
-  min-height: 100vh;
-  transition: all 0.3s;
+/* 全局佈局 */
+.wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    align-items: stretch;
 }
 
+/* 側邊欄基本樣式 */
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    padding: 1rem;
+    transition: all 0.3s;
+}
+
+/* 收合後的側邊欄 */
 #sidebar.collapsed {
-  width: 50px; /* 隱藏側邊欄時的寬度 */
-  overflow: hidden;
+    width: 60px !important;
+    padding: 0.75rem 0.5rem !important;
+}
+
+/* 收合時圖標置中 */
+#sidebar.collapsed .nav-link {
+    justify-content: center !important;
+    padding: 0.5rem !important;
 }
 
 /* 隱藏文字 */
 #sidebar.collapsed .sidebar-text {
-  display: none;
+    display: none;
+}
+
+/* 主內容區域 */
+#content {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* 側邊欄收合時調整內容區域 */
+#sidebar.collapsed + #content {
+    width: calc(100% - 60px);
+    margin-left: 60px;
 }
 
 /* 子選單 */
 .submenu {
-  display: none;
-  padding-left: 1.5rem;
+    display: none;
+    padding-left: 1.5rem;
 }
 
 .submenu.show {
-  display: block;
+    display: block;
 }
 
-/* Tooltip 避免被蓋住 */
+/* 側邊欄收合時隱藏子選單 */
+#sidebar.collapsed .collapse {
+    display: none !important;
+}
+
+/* Tooltip 樣式 */
 .tooltip-inner {
-  max-width: none;
+    max-width: none;
+    background-color: #495057;
 }
+
+/* 登出容器 */
 .logout-container {
-  margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* 活動項目樣式 */
 #sidebar .nav-link.active {
-  background-color: #0d6efd;
-  color: white;
-  border-radius: 0.375rem;
+    background-color: #0d6efd;
+    color: white;
+    border-radius: 0.375rem;
+}
+
+/* 響應式設計 - 在小屏幕下自動收合側邊欄 */
+@media (max-width: 768px) {
+    #sidebar {
+        width: 60px;
+        padding: 0.75rem 0.5rem;
+    }
+    
+    #sidebar .sidebar-text {
+        display: none;
+    }
+    
+    #content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+    }
+    
+    #sidebar .nav-link {
+        justify-content: center !important;
+        padding: 0.5rem !important;
+    }
+    
+    #sidebar .collapse {
+        display: none !important;
+    }
+    
+    /* 在小屏幕下顯示展開側邊欄的按鈕 */
+    #toggleSidebar.expanded-view {
+        display: block;
+    }
 }
