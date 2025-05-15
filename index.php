@@ -17,7 +17,24 @@ require_once 'action/common.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
 
+    <style>
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn ease 1.5s forwards;
+        }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 
 </head>
 
@@ -84,6 +101,27 @@ require_once 'action/common.php';
                 ?>
             </div>
         </div>
+    </section>
+    <?php
+    $quotes = [
+        "閱讀無法逃避現實，卻會讓現實變得可愛一點。",
+        "書本是靈魂最溫柔的庇護所。",
+        "每本書，都是一場與自己的對話;認識自己是所有智慧的開端。",
+        "在書頁之間，我們練習成為更好的人。",
+        "閱讀使靈魂發光，使見識增長。",
+        "書籍是人類進步的階梯。",
+        "人間的黑夜靠燈火點燃，人心的黑夜靠書本點燃。"
+    ];
+    $randomQuote = $quotes[array_rand($quotes)];
+    ?>
+    <section class="text-center py-5 fade-in"
+        style="background-color: #fdfaf6; font-family: 'Noto Serif TC'; color: #5e4638;">
+        <blockquote class="blockquote mb-0">
+            
+            <p style="font-size: 1.2rem;">「<?= $randomQuote ?>」</p>
+            
+            <footer class="blockquote-footer mt-2">人生研究室 · 今日金句</footer>
+        </blockquote>
     </section>
 
     <?php
