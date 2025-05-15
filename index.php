@@ -34,6 +34,27 @@ require_once 'action/common.php';
                 transform: translateY(0);
             }
         }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .fade-in-up.delay-1 {
+            animation-delay: 0.3s;
+        }
+
+        .fade-in-up.delay-2 {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 
 </head>
@@ -51,17 +72,17 @@ require_once 'action/common.php';
     font-family: 'Noto Serif TC', serif;
     color: #3e3e3e;
 ">
-            <h1 class="fw-bold mb-3" style="font-size: 3rem;">人生研究室</h1>
-            <p class="mb-4" style="font-size: 1.25rem; line-height: 1.8;">
+            <h1 class="fw-bold mb-3 fade-in-up" style="font-size: 3rem;">人生研究室</h1>
+            <p class="mb-4 fade-in-up delay-1" style="font-size: 1.25rem; line-height: 1.8;">
                 用知識品味人生，<br class="d-none d-md-block">用閱讀改變風景。
             </p>
 
 
-            <a href="#products" class="btn btn-outline-dark rounded-pill px-4 py-2 shadow-sm" style="
-        font-weight: 500;
-        letter-spacing: 0.5px;  
-        transition: all 0.3s ease;
-    " onmouseover="this.style.backgroundColor='#3e3e3e'; this.style.color='#fff';"
+            <a href="#products" class="btn btn-outline-dark rounded-pill px-4 py-2 shadow-sm fade-in-up delay-2" style="
+    font-weight: 500;
+    letter-spacing: 0.5px;  
+    transition: all 0.3s ease;
+" onmouseover="this.style.backgroundColor='#3e3e3e'; this.style.color='#fff';"
                 onmouseout="this.style.backgroundColor='transparent'; this.style.color='#3e3e3e';">
                 立即探索書海
             </a>
@@ -107,7 +128,7 @@ require_once 'action/common.php';
         "閱讀無法逃避現實，卻會讓現實變得可愛一點。",
         "書本是靈魂最溫柔的庇護所。",
         "每本書，都是一場與自己的對話;認識自己是所有智慧的開端。",
-        "在書頁之間，我們練習成為更好的人。",
+        "在文字之間，我們練習成為更好的人。",
         "閱讀使靈魂發光，使見識增長。",
         "書籍是人類進步的階梯。",
         "人間的黑夜靠燈火點燃，人心的黑夜靠書本點燃。"
@@ -115,11 +136,11 @@ require_once 'action/common.php';
     $randomQuote = $quotes[array_rand($quotes)];
     ?>
     <section class="text-center py-5 fade-in"
-        style="background-color: #fdfaf6; font-family: 'Noto Serif TC'; color: #5e4638;">
+        style=" font-family: 'Noto Serif TC'; color: #5e4638;">
         <blockquote class="blockquote mb-0">
-            
-            <p style="font-size: 1.2rem;">「<?= $randomQuote ?>」</p>
-            
+
+            <p style="font-size: 1.5rem;">「<?= $randomQuote ?>」</p>
+
             <footer class="blockquote-footer mt-2">人生研究室 · 今日金句</footer>
         </blockquote>
     </section>

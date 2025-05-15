@@ -14,6 +14,25 @@ require_once 'action/database.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="image/blackLOGO.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f9f8f4;
+            font-family: 'Noto Serif TC', serif;
+            color: #4a4a4a;
+        }
+
+        h2 {
+            font-weight: bold;
+            color: #5c504d;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+    
 </head>
 
 <body>
@@ -21,7 +40,7 @@ require_once 'action/database.php';
         <?php include 'compoents/nav.php'; ?>
         <section id="products" class="py-5 mb-5">
             <div class="container-fluid">
-                <h2 class="mb-4">
+                <h2 class="mb-4 ">
                     <?php
                     if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
                         echo '搜尋結果：' . htmlspecialchars($_GET['keyword']);
@@ -53,6 +72,7 @@ require_once 'action/database.php';
                 </div>
             </div>
         </section>
+
         <?php include 'compoents/footer.php'; ?>
     </div>
 </body>
