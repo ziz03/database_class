@@ -51,90 +51,70 @@ if (!$product) {
     <style>
         body {
             font-family: 'Noto Serif TC', serif;
-            background-color: #f7f7f7;
+            background-color: #f5f5f0;
+            color: #333;
+
         }
 
         #product-detail .card {
-            border: none;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 1.2rem;
-            overflow: hidden;
-            background-color: #fff;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         #product-detail img {
-            max-height: 380px;
-            object-fit: contain;
-            background-color: #fff;
-            padding: 1rem;
-            border-radius: 1rem;
-        }
-
-        .product-price {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #f12711;
-        }
-
-        .description p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #777;
-        }
-
-        .btn-add-cart {
-            font-size: 1.2rem;
-            padding: 0.6rem 1.5rem;
-        }
-
-        .checkout-btn {
-            margin-top: 40px;
-        }
-
-        .sticky-top {
-            top: 150px;
+            background-color: #f8f9f7;
         }
 
         .badge {
-            font-size: 0.9rem;
-            background: linear-gradient(45deg, #f12711, #f5af19);
+            background-color: #5b6e6e;
+            /* 深灰綠 */
+            color: #ffffff;
         }
 
         .product-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #333;
+            color: #2c3e50;
+            /* 墨藍 */
         }
 
-        .text-muted {
-            color: #7d7d7d !important;
+        .accordion-button {
+            background-color: #f9f9f5;
+            color: #3c3c3c;
         }
 
-        .small-text {
-            font-size: 0.85rem;
+        .accordion-button:not(.collapsed) {
+            background-color: #e6eae7;
+            color: #2d2d2d;
         }
 
-        .mt-5 {
-            margin-top: 3rem;
+        .accordion-body p {
+            color: #555;
         }
 
-        .shadow-sm {
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        .fs-3.text-danger {
+            color: #a85d3d;
+            /* 暖紅銅 */
+            border-top: 1px dashed #bbb;
         }
 
-        .text-center {
-            text-align: center;
+        .btn-outline-danger {
+            border-color: #a85d3d;
+            color: #a85d3d;
         }
 
-        /* 手機視覺調整 */
-        @media (max-width: 768px) {
-            #product-detail img {
-                max-height: 300px;
-            }
+        .btn-outline-danger:hover {
+            background-color: #f7eee9;
+            color: #8c4430;
+            border-color: #8c4430;
+        }
 
-            .product-price {
-                font-size: 1.8rem;
-            }
+        .btn-success {
+            background: linear-gradient(90deg, #7ba79d, #a5c5b8);
+            /* 靜綠漸層 */
+            color: #fff;
+        }
+
+        .text-muted.small {
+            color: #777;
         }
     </style>
 </head>
@@ -211,6 +191,16 @@ if (!$product) {
                                         <i class="bi bi-cart-plus me-2"></i>加入購物車
                                     </button>
                                 </form>
+                                <!-- 額外商品資訊 -->
+                                <div class="mt-4 text-muted small">
+                                    <div><i
+                                            class="bi bi-upc-scan me-2"></i>ISBN：<?php echo htmlspecialchars($product['isbn']); ?>
+                                    </div>
+                                    <div><i
+                                            class="bi bi-tags me-2"></i>分類：<?php echo htmlspecialchars($product['classification']); ?>
+                                    </div>
+                                </div>
+
 
                                 <div class="mt-3 text-muted small d-flex align-items-center gap-2">
                                     <i class="bi bi-shield-check text-success"></i>

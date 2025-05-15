@@ -262,6 +262,12 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                             <?php endif; ?>
 
                             <p class="price-text">$<?= number_format($product['price']) ?></p>
+                            <!-- 👇 新增ISBN與分類 -->
+                            <div class="mt-3 small text-muted d-flex flex-column" style="font-size: 0.8rem;">
+                                <span>ISBN：<?= htmlspecialchars($product['isbn']) ?></span>
+                                <span>分類：<?= htmlspecialchars($product['classification']) ?></span>
+                            </div>
+                            <!-- 👆 -->
                             <div class="mt-auto d-grid gap-2">
                                 <a href="product.php?product_id=<?= $product['id'] ?>" class="btn btn-custom-outline">
                                     查看詳情

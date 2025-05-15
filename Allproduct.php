@@ -40,7 +40,7 @@ require_once 'action/database.php';
         <?php include 'compoents/nav.php'; ?>
         <section id="products" class="py-5 mb-5">
             <div class="container-fluid">
-                <h2 class="mb-4 ">
+                <h2 class="mb-4 text-center">
                     <?php
                     if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
                         echo '搜尋結果：' . htmlspecialchars($_GET['keyword']);

@@ -24,16 +24,20 @@ if (
     isset($_POST['product_id']) &&
     isset($_POST['new_name']) &&
     isset($_POST['new_price']) &&
-    isset($_POST['new_stock'])
+    isset($_POST['new_stock']) &&
+    isset($_POST['new_classification']) &&    // 新增分類欄位
+    isset($_POST['new_isbn'])                 // 新增ISBN欄位
 ) {
     $product_id = intval($_POST['product_id']);
     $new_name = trim($_POST['new_name']);
     $new_price = floatval($_POST['new_price']);
     $new_stock = intval($_POST['new_stock']);
+    $new_classification = trim($_POST['new_classification']);
+    $new_isbn = trim($_POST['new_isbn']);
 
-    $sql = "UPDATE products SET name = ?, price = ?, stock = ? WHERE id = ?";
+    $sql = "UPDATE products SET name = ?, price = ?, stock = ?, classification = ?, isbn = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdii", $new_name, $new_price, $new_stock, $product_id);
+    $stmt->bind_param("sdissi", $new_name, $new_price, $new_stock, $new_classification, $new_isbn, $product_id);
     $stmt->execute();
     header("Location: products.php");
     exit;
@@ -250,6 +254,8 @@ $result = $stmt->get_result();
                     <th>名稱</th>
                     <th>價格</th>
                     <th>庫存</th>
+                    <th>分類</th> <!-- 新增 -->
+                    <th>ISBN</th> <!-- 新增 -->
                     <th>圖片</th>
                     <th>新增時間</th>
                     <th>動作</th>
@@ -269,15 +275,27 @@ $result = $stmt->get_result();
                                     required></td>
                             <td><input type="number" name="new_stock" value="<?= htmlspecialchars($row['stock']) ?>" min="0"
                                     class="form-control form-control-sm" required></td>
+                            <!-- 新增分類欄位輸入 -->
+                            <td><input type="text" name="new_classification"
+                                    value="<?= htmlspecialchars($row['classification']) ?>"
+                                    class="form-control form-control-sm"></td>
+
+                            <!-- 新增ISBN欄位輸入 -->
+                            <td><input type="text" name="new_isbn" value="<?= htmlspecialchars($row['isbn']) ?>"
+                                    class="form-control form-control-sm"></td>
+
                             <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="商品圖片" style="height: 50px;"></td>
                             <td><?= htmlspecialchars($row['created_at']) ?></td>
                             <td>
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
-                                <button type="submit" name="update_all" class="btn btn-outline-primary btn-sm">更新資料</button>
-
-                                <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm "
-                                    onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
+                                <div class="d-flex flex-column gap-1">
+                                    <button type="submit" name="update_all"
+                                        class="btn btn-outline-primary btn-sm">更新資料</button>
+                                    <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
+                                </div>
                             </td>
+
                         </form>
                     </tr>
                 <?php endwhile; ?>
