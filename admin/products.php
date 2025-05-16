@@ -263,7 +263,12 @@ $result = $stmt->get_result();
             </thead>
             <tbody>
                 <?php $index = $startFrom + 1; ?>
-                <?php while ($row = $result->fetch_assoc()): ?>
+                <?php while ($row = $result->fetch_assoc()): 
+                    $time=$row['created_at'];
+                    $dt=new DateTime($time);
+                    
+                    
+                    ?>
                     <tr>
                         <form method="POST" class="d-flex align-items-center">
                             <td><?= $index++ ?></td>
@@ -285,7 +290,7 @@ $result = $stmt->get_result();
                                     class="form-control form-control-sm"></td>
 
                             <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="商品圖片" style="height: 50px;"></td>
-                            <td><?= htmlspecialchars($row['created_at']) ?></td>
+                            <td><?= $dt->format('y-m-d -H-i'); ?></td>
                             <td>
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
                                 <div class="d-flex flex-column gap-1">

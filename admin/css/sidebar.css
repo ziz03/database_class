@@ -8,7 +8,7 @@
 
 /* 側邊欄基本樣式 */
 #sidebar {
-    width: 250px;
+    width: 195px;
     position: fixed;
     top: 0;
     left: 0;
@@ -38,7 +38,7 @@
 /* 主內容區域 */
 #content {
     width: calc(100% - 250px);
-    margin-left: 250px;
+    margin-left: 200px;
     min-height: 100vh;
     transition: all 0.3s;
 }

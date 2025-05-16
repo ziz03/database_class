@@ -241,7 +241,10 @@ $total_pages = ceil($total_orders / $limit);
             <tbody>
                 <?php if (count($orders) > 0): ?>
                     <?php $display_id = ($page - 1) * $limit + 1; ?>
-                    <?php foreach ($orders as $order): ?>
+                    <?php foreach ($orders as $order):
+                        $time = $order['created_at'];
+                        $dt = new DateTime($time);
+                    ?>
                         <?php
                         // 查詢商品名稱
                         $stmt = $conn->prepare("
@@ -264,7 +267,7 @@ $total_pages = ceil($total_orders / $limit);
                             <td><?= htmlspecialchars($order['user_id']) ?></td>
                             <td><?= htmlspecialchars(number_format($order['total_price'])) ?> 元</td>
                             <td><?= htmlspecialchars($order['status']) ?></td>
-                            <td><?= htmlspecialchars($order['created_at']) ?></td>
+                            <td><?= htmlspecialchars($dt->format('y-m-d -H-i')) ?></td>
                             <td><?= htmlspecialchars($order['recipient_name']) ?></td>
                             <td><?= htmlspecialchars($order['recipient_phone']) ?></td>
                             <td><?= nl2br(htmlspecialchars($order['recipient_address'])) ?></td>
@@ -314,7 +317,7 @@ $total_pages = ceil($total_orders / $limit);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="./js/sidebar.js"></script>
 </body>
 
