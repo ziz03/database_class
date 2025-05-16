@@ -6,8 +6,7 @@ require_once('../action/common.php');
 $userName = check_login();
 
 // 取得目前頁數
-$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-$page = max($page, 1);
+$page = isset($_GET['page']) ? max((int) $_GET['page'], 1) : 1;
 $limit = 5; // 每頁顯示幾筆資料
 $offset = ($page - 1) * $limit;
 
@@ -18,7 +17,7 @@ $total_orders = 0;
 $orders = [];
 
 if ($search !== '') {
-    // 1️⃣ 完全符合的查詢 (收件人電話)
+    // 完全符合查詢（收件人電話）
     $stmt = $conn->prepare("SELECT * FROM orders WHERE recipient_phone = ? LIMIT ? OFFSET ?");
     $stmt->bind_param("sii", $search, $limit, $offset);
     $stmt->execute();
@@ -28,7 +27,6 @@ if ($search !== '') {
 
     if (count($orders) > 0) {
         $search_exact_found = true;
-        // 取得總筆數
         $stmt = $conn->prepare("SELECT COUNT(*) as total FROM orders WHERE recipient_phone = ?");
         $stmt->bind_param("s", $search);
         $stmt->execute();
@@ -36,7 +34,7 @@ if ($search !== '') {
         $stmt->fetch();
         $stmt->close();
     } else {
-        // 2️⃣ 模糊搜尋 (部分符合)
+        // 模糊搜尋（部分符合）
         $likeSearch = "%" . $search . "%";
         $stmt = $conn->prepare("SELECT * FROM orders WHERE recipient_phone LIKE ? LIMIT ? OFFSET ?");
         $stmt->bind_param("sii", $likeSearch, $limit, $offset);
@@ -63,7 +61,6 @@ if ($search !== '') {
     $orders = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
 
-    // 取得總筆數
     $result = $conn->query("SELECT COUNT(*) as total FROM orders");
     $total_orders = $result->fetch_assoc()['total'];
 }
@@ -76,59 +73,155 @@ $total_pages = ceil($total_orders / $limit);
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>訂單列表</title>
-    <link rel="icon" href="../image\blackLOGO.png">
+    <link rel="icon" href="../image/blackLOGO.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/sidebar.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous" />
+    <link rel="stylesheet" href="./css/sidebar.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
-    <!-- Custom styles for this page -->
     <style>
-        .table th, .table td {
-            vertical-align: middle;
-            text-align: center;
+        body {
+            background-color: #fdfaf6;
+            font-family: 'Noto Serif TC', serif;
         }
-        .table-bordered {
-            border: 1px solid #ddd;
+
+        #content {
+            min-height: 100vh;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
         }
-        .table-bordered th, .table-bordered td {
-            border: 1px solid #ddd;
+
+        h2 {
+            font-weight: 700;
+            color: #2c3e50;
         }
-        .table-striped tbody tr:nth-child(odd) {
-            background-color: #f9f9f9;
+
+        form.d-flex {
+            max-width: 420px;
+            margin-bottom: 1.5rem;
         }
-        .pagination .page-item.active .page-link {
-            background-color: #17a2b8;
-            border-color: #17a2b8;
-        }
-        .pagination .page-link {
-            border-radius: 25px;
-            margin: 0 5px;
-        }
+
         .form-control {
             border-radius: 25px;
+            border: 1.5px solid #b1a78e;
+            padding-left: 1.25rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
-        .btn {
+
+        .form-control:focus {
+            outline: none;
+            border-color: #6c757d;
+            box-shadow: 0 0 8px #6c757d66;
+        }
+
+        .btn-outline-success {
             border-radius: 25px;
+            padding: 0.45rem 1.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #20c997;
+            color: white;
+            border-color: #20c997;
+        }
+
+        table {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgb(0 0 0 / 0.08);
+        }
+
+        .table {
+            margin-bottom: 2rem;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+            padding: 0.9rem 0.75rem;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .table thead {
+            background-color: #f0ead8;
+            color: #5a4e3c;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #faf7f0;
+        }
+
+        .pagination {
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-item .page-link {
+            border-radius: 25px;
+            margin: 0 6px;
+            color: #6c757d;
+            font-weight: 500;
+            padding: 6px 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .page-item.active .page-link {
+            background-color: #20c997;
+            border-color: #20c997;
+            color: white;
+            font-weight: 700;
+        }
+
+        .page-link:hover {
+            background-color: #d9e6e2;
+            color: #20c997;
+        }
+
+        .alert-warning {
+            max-width: 420px;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            font-size: 1rem;
+            background-color: #fff4e5;
+            border-color: #ffd97d;
+            color: #a86900;
         }
     </style>
 </head>
 
 <body>
     <?php include('./compoents/sidebar.php'); ?>
-    <div id="content" class="flex-grow-1 p-3">
-        <?php echo generate_breadcrumb($current_page); ?>
-        <h2 class="mb-4">訂單列表</h2>
-        <form class="d-flex mb-3" method="get" action="">
-            <input class="form-control me-2" type="search" placeholder="輸入收件人電話" aria-label="Search" name="search"
-                value="<?= htmlspecialchars($search) ?>">
-            <button class="btn btn-outline-success" type="submit">搜尋</button>
+    <div id="content" class="flex-grow-1">
+        <?php echo generate_breadcrumb($current_page ?? '訂單列表'); ?>
+
+        <h2>訂單列表</h2>
+
+        <form class="d-flex" method="get" action="">
+            <input class="form-control me-2" type="search" name="search" placeholder="輸入收件人電話" aria-label="搜尋"
+                value="<?= htmlspecialchars($search) ?>" />
+            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i> 搜尋</button>
         </form>
+        <?php if ($search !== ''): ?>
+            <div class="mb-3">
+                <a href="?" class="btn btn-outline-success">回訂單首頁</a>
+            </div>
+        <?php endif; ?>
 
         <?php if ($search !== '' && !$search_exact_found && count($orders) === 0): ?>
-            <div class="alert alert-warning">找不到訂單。</div>
+            <div class="alert alert-warning" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i> 找不到訂單。
+            </div>
         <?php endif; ?>
 
         <table class="table table-bordered table-striped">
@@ -169,7 +262,7 @@ $total_pages = ceil($total_orders / $limit);
                         <tr>
                             <td><?= $display_id++ ?></td>
                             <td><?= htmlspecialchars($order['user_id']) ?></td>
-                            <td><?= htmlspecialchars($order['total_price']) ?></td>
+                            <td><?= htmlspecialchars(number_format($order['total_price'])) ?> 元</td>
                             <td><?= htmlspecialchars($order['status']) ?></td>
                             <td><?= htmlspecialchars($order['created_at']) ?></td>
                             <td><?= htmlspecialchars($order['recipient_name']) ?></td>
@@ -180,7 +273,7 @@ $total_pages = ceil($total_orders / $limit);
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="9" class="text-center">目前沒有訂單資料。</td>
+                        <td colspan="9" class="text-center text-muted fst-italic">目前沒有訂單資料。</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -188,22 +281,30 @@ $total_pages = ceil($total_orders / $limit);
 
         <?php if ($total_pages > 1): ?>
             <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
+                <ul class="pagination">
                     <?php if ($page > 1): ?>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>">上一頁</a>
+                            <a class="page-link" href="?page=<?= $page - 1 ?>&search=<?= urlencode($search) ?>"
+                                aria-label="上一頁">
+                                <span aria-hidden="true">&laquo; 上一頁</span>
+                            </a>
                         </li>
                     <?php endif; ?>
 
                     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                         <li class="page-item <?= $i === $page ? 'active' : '' ?>">
-                            <a class="page-link" href="?page=<?= $i ?>&search=<?= urlencode($search) ?>"><?= $i ?></a>
+                            <a class="page-link" href="?page=<?= $i ?>&search=<?= urlencode($search) ?>">
+                                <?= $i ?>
+                            </a>
                         </li>
                     <?php endfor; ?>
 
                     <?php if ($page < $total_pages): ?>
                         <li class="page-item">
-                            <a class="page-link" href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>">下一頁</a>
+                            <a class="page-link" href="?page=<?= $page + 1 ?>&search=<?= urlencode($search) ?>"
+                                aria-label="下一頁">
+                                <span aria-hidden="true">下一頁 &raquo;</span>
+                            </a>
                         </li>
                     <?php endif; ?>
                 </ul>
@@ -212,8 +313,8 @@ $total_pages = ceil($total_orders / $limit);
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
-        crossorigin="anonymous"></script>
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+        </script>
     <script src="./js/sidebar.js"></script>
 </body>
 

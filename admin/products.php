@@ -254,8 +254,8 @@ $result = $stmt->get_result();
                     <th>名稱</th>
                     <th>價格</th>
                     <th>庫存</th>
-                    <th>分類</th> <!-- 新增 -->
-                    <th>ISBN</th> <!-- 新增 -->
+                    <th>分類</th> 
+                    <th>ISBN</th> 
                     <th>圖片</th>
                     <th>新增時間</th>
                     <th>動作</th>
@@ -290,7 +290,7 @@ $result = $stmt->get_result();
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
                                 <div class="d-flex flex-column gap-1">
                                     <button type="submit" name="update_all"
-                                        class="btn btn-outline-primary btn-sm">更新資料</button>
+                                        class="btn btn-outline-primary btn-sm ">更新資料</button>
                                     <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm"
                                         onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
                                 </div>

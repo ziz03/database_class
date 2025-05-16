@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// 查詢購物車內容，包含庫存信息
 $sql = "SELECT ci.product_id, ci.quantity, p.name, p.price, p.stock
         FROM cart_items ci
         JOIN products p ON ci.product_id = p.id
@@ -28,7 +27,6 @@ $stock_issues = [];
 foreach ($cart_items as &$item) {
     $total_price += $item['price'] * $item['quantity'];
     
-    // 檢查是否有庫存問題
     if ($item['quantity'] > $item['stock']) {
         $has_stock_issues = true;
         $stock_issues[] = [
@@ -36,7 +34,6 @@ foreach ($cart_items as &$item) {
             'quantity' => $item['quantity'],
             'stock' => $item['stock']
         ];
-        // 標記庫存不足的項目
         $item['stock_issue'] = true;
     } else {
         $item['stock_issue'] = false;
@@ -48,96 +45,122 @@ foreach ($cart_items as &$item) {
 <html lang="zh-TW">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>結帳</title>
-    <link rel="icon" href="image/blackLOGO.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="image/blackLOGO.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <style>
-    .stock-warning {
-        color: orange;
-        font-weight: bold;
-    }
+        body {
+            background-color: #fefefe;
+            font-family: "Noto Serif TC", serif;
+        }
 
-    .stock-danger {
-        color: red;
-        font-weight: bold;
-    }
+        h2, h4 {
+            font-weight: 600;
+            color: #2c3e50;
+        }
 
-    .stock-ok {
-        color: green;
-    }
+        .stock-warning {
+            color: #d97706; /* Bootstrap warning orange */
+            font-weight: 600;
+        }
 
-    /* 增加頁面間距相關樣式 */
-    .wrapper {
-        position: relative;
-        min-height: 100vh;
-    }
+        .stock-danger {
+            color: #dc3545; /* Bootstrap danger red */
+            font-weight: 700;
+        }
 
-    main {
-        padding-bottom: 100px;
-        /* 確保 main 內容和 footer 之間有足夠空間 */
-    }
+        .stock-ok {
+            color: #198754; /* Bootstrap success green */
+        }
 
-    .form-action-buttons {
-        margin-top: 30px;
-        margin-bottom: 60px;
-        /* 增加按鈕下方空間 */
-    }
+        /* 讓背景較淺色的庫存不足項目醒目 */
+        .bg-light.stock-issue {
+            background-color: #fff5f5 !important;
+        }
 
-    .container {
-        margin-bottom: 40px;
-        /* 增加容器底部間距 */
-    }
+        .list-group-item {
+            font-size: 1rem;
+        }
+
+        /* 按鈕區 */
+        .form-action-buttons {
+            margin-top: 2.5rem;
+        }
+
+        /* 縮小庫存警告標題和 icon */
+        .alert h5 {
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* 讓回到購物車按鈕及刷新按鈕顏色對比更明顯 */
+        .btn-outline-primary:hover {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        /* 表單欄位 placeholder 色調較柔和 */
+        ::placeholder {
+            color: #6c757d;
+            opacity: 1;
+        }
     </style>
 </head>
 
 <body>
     <div class="wrapper d-flex flex-column min-vh-100">
         <?php include 'compoents/nav.php'; ?>
-        <main class="flex-grow-1 py-4">
-            <!-- 添加 py-4 增加主內容區上下 padding -->
 
+        <main class="flex-grow-1 py-4">
             <div class="container mt-5 mb-5">
-                <!-- 增加 mb-5 容器底部間距 -->
-                <h2>結帳資訊</h2>
+                <h2 class="mb-4">結帳資訊</h2>
 
                 <?php if (!empty($_SESSION['error'])): ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= $_SESSION['error'] ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php unset($_SESSION['error']); ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?= htmlspecialchars($_SESSION['error']) ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php unset($_SESSION['error']); ?>
                 <?php endif; ?>
 
                 <?php if (empty($cart_items)): ?>
-                <p>您的購物車是空的，無法結帳。</p>
+                    <p class="fs-5">您的購物車是空的，無法結帳。</p>
                 <?php else: ?>
-                <!-- 庫存警告 -->
-                <?php if ($has_stock_issues): ?>
-                <div class="alert alert-danger">
-                    <h5><i class="bi bi-exclamation-triangle-fill"></i> 庫存警告</h5>
-                    <p>以下商品庫存不足，請返回購物車調整數量後再結帳：</p>
-                    <ul>
-                        <?php foreach ($stock_issues as $issue): ?>
-                        <li><strong><?= htmlspecialchars($issue['name']) ?></strong> - 您要購買 <?= $issue['quantity'] ?>
-                            件，但庫存只有 <?= $issue['stock'] ?> 件</li>
-                        <?php endforeach; ?>
-                    </ul>
-                    <a href="cart.php" class="btn btn-primary">返回購物車</a>
-                </div>
-                <?php else: ?>
-                <div class="alert alert-warning">
-                    <strong>注意：</strong> 商品庫存可能隨時變動，實際庫存將在結帳時確認。若您停留在本頁時間過長，建議刷新頁面以查看最新庫存。
-                </div>
-                <?php endif; ?>
+                    <?php if ($has_stock_issues): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <h5><i class="bi bi-exclamation-triangle-fill"></i> 庫存警告</h5>
+                            <p class="mb-3">以下商品庫存不足，請返回購物車調整數量後再結帳：</p>
+                            <ul class="mb-3">
+                                <?php foreach ($stock_issues as $issue): ?>
+                                    <li><strong><?= htmlspecialchars($issue['name']) ?></strong> - 您要購買 <?= $issue['quantity'] ?>
+                                        件，但庫存只有 <?= $issue['stock'] ?> 件</li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <a href="cart.php" class="btn btn-primary btn-sm">返回購物車調整數量</a>
+                        </div>
+                    <?php else: ?>
+                        <div class="alert alert-warning d-flex align-items-center" role="alert">
+                            <i class="bi bi-info-circle-fill me-2 fs-4"></i>
+                            <div>
+                                <strong>注意：</strong> 商品庫存可能隨時變動，實際庫存將在結帳時確認。若您停留在本頁時間過長，建議刷新頁面以查看最新庫存。
+                            </div>
+                        </div>
+                    <?php endif; ?>
 
-                <h4 class="mt-4">訂單摘要</h4>
-                <ul class="list-group mb-4">
-                    <!-- 增加 mb-4 增加下方間距 -->
-                    <?php foreach ($cart_items as $item): 
-                            // 確定庫存狀態的 CSS 類
+                    <h4 class="mt-4 mb-3">訂單摘要</h4>
+                    <ul class="list-group shadow-sm mb-4">
+                        <?php foreach ($cart_items as $item):
                             $stock_class = '';
-                            if ($item['quantity'] >= $item['stock']) {
+                            if ($item['quantity'] > $item['stock']) {
                                 $stock_class = 'stock-danger';
                             } elseif ($item['quantity'] >= $item['stock'] * 0.8) {
                                 $stock_class = 'stock-warning';
@@ -145,79 +168,78 @@ foreach ($cart_items as &$item) {
                                 $stock_class = 'stock-ok';
                             }
                         ?>
-                    <li
-                        class="list-group-item d-flex justify-content-between align-items-center <?= $item['stock_issue'] ? 'bg-light' : '' ?>">
-                        <div>
-                            <?= htmlspecialchars($item['name']) ?> × <?= $item['quantity'] ?>
-                            <div class="<?= $stock_class ?> small">
-                                庫存: <?= $item['stock'] ?>
-                                <?php if ($item['stock_issue']): ?>
-                                <span class="badge bg-danger">庫存不足</span>
-                                <?php endif; ?>
-                            </div>
+                            <li class="list-group-item d-flex justify-content-between align-items-center <?= $item['stock_issue'] ? 'bg-light stock-issue' : '' ?>">
+                                <div>
+                                    <?= htmlspecialchars($item['name']) ?> × <?= $item['quantity'] ?>
+                                    <div class="<?= $stock_class ?> small mt-1">
+                                        庫存: <?= $item['stock'] ?>
+                                        <?php if ($item['stock_issue']): ?>
+                                            <span class="badge bg-danger ms-2">庫存不足</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <span class="fw-semibold"><?= number_format($item['price'] * $item['quantity'], 0) ?> 元</span>
+                            </li>
+                        <?php endforeach; ?>
+                        <li class="list-group-item d-flex justify-content-between fw-bold fs-5">
+                            <span>總金額</span>
+                            <span><?= number_format($total_price, 0) ?> 元</span>
+                        </li>
+                    </ul>
+
+                    <form action="action/checkout_process.php" method="POST" id="checkoutForm" class="mb-5">
+                        <h4 class="mb-3">收件資訊</h4>
+                        <div class="mb-3">
+                            <label for="recipient_name" class="form-label">收件人姓名</label>
+                            <input type="text" class="form-control" id="recipient_name" name="recipient_name" placeholder="請輸入收件人姓名" required />
                         </div>
-                        <span><?= number_format($item['price'] * $item['quantity'], 0) ?> 元</span>
-                    </li>
-                    <?php endforeach; ?>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <strong>總金額</strong>
-                        <strong><?= number_format($total_price, 0) ?> 元</strong>
-                    </li>
-                </ul>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">地址</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" placeholder="請輸入完整地址" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="recipient_phone" class="form-label">聯絡電話</label>
+                            <input type="tel" class="form-control" id="recipient_phone" name="recipient_phone" placeholder="請輸入聯絡電話" required />
+                        </div>
+                        <input type="hidden" name="total_price" value="<?= $total_price ?>" />
 
-                <form action="action/checkout_process.php" method="POST" id="checkoutForm" class="mb-5">
-                    <!-- 增加 mb-5 表單底部間距 -->
-                    <h4 class="mt-4">收件資訊</h4>
-                    <div class="mb-3">
-                        <label for="recipient_name" class="form-label">收件人姓名</label>
-                        <input type="text" class="form-control" id="recipient_name" name="recipient_name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">地址</label>
-                        <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="recipient_phone" class="form-label">聯絡電話</label>
-                        <input type="tel" class="form-control" id="recipient_phone" name="recipient_phone" required>
-                    </div>
-                    <input type="hidden" name="total_price" value="<?= $total_price ?>">
+                        <div class="form-action-buttons d-flex align-items-center gap-3">
+                            <button type="submit" class="btn btn-success btn-lg flex-grow-1" <?= $has_stock_issues ? 'disabled' : '' ?> id="submitOrder">
+                                <i class="bi bi-cart-check-fill me-2"></i>送出訂單
+                            </button>
 
-                    <!-- 將按鈕包裝在一個 div 中並增加間距 -->
-                    <div class="form-action-buttons mt-4 mb-5 pb-4">
-                        <!-- 添加額外的間距 -->
-                        <button type="submit" class="btn btn-success btn-lg" <?= $has_stock_issues ? 'disabled' : '' ?>
-                            id="submitOrder">送出訂單</button>
-                        <?php if ($has_stock_issues): ?>
-                        <a href="cart.php" class="btn btn-outline-primary btn-lg ms-2">返回購物車調整數量</a>
-                        <?php else: ?>
-                        <a href="javascript:location.reload()" class="btn btn-outline-secondary ms-2">刷新庫存</a>
-                        <?php endif; ?>
-                    </div>
-                </form>
+                            <?php if ($has_stock_issues): ?>
+                                <a href="cart.php" class="btn btn-outline-primary btn-lg flex-grow-1">返回購物車調整數量</a>
+                            <?php else: ?>
+                                <button type="button" class="btn btn-outline-secondary btn-lg flex-grow-1" onclick="location.reload();">
+                                    <i class="bi bi-arrow-clockwise me-2"></i>刷新庫存
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    </form>
                 <?php endif; ?>
             </div>
-
         </main>
+
         <?php include 'compoents/footer.php'; ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    // 提交前檢查庫存
-    document.getElementById('checkoutForm')?.addEventListener('submit', function(event) {
-        <?php if ($has_stock_issues): ?>
-        event.preventDefault();
-        Swal.fire({
-            icon: 'error',
-            title: '庫存不足',
-            html: '某些商品庫存不足，請返回購物車調整數量',
-            confirmButtonText: '返回購物車'
-        }).then(() => {
-            window.location.href = 'cart.php';
+        document.getElementById('checkoutForm')?.addEventListener('submit', function(event) {
+            <?php if ($has_stock_issues): ?>
+            event.preventDefault();
+            Swal.fire({
+                icon: 'error',
+                title: '庫存不足',
+                html: '某些商品庫存不足，請返回購物車調整數量',
+                confirmButtonText: '返回購物車'
+            }).then(() => {
+                window.location.href = 'cart.php';
+            });
+            <?php endif; ?>
         });
-        <?php endif; ?>
-    });
     </script>
 </body>
 
