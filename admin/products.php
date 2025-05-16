@@ -223,7 +223,7 @@ $result = $stmt->get_result();
 
 <body>
     <?php include('compoents/sidebar.php'); ?>
-    <div class="content-wrapper flex-grow-1 p-3">
+    <div id="content" class="flex-grow-1 p-3">
         <?php echo generate_breadcrumb($current_page); ?>
         <h2 class="page-header">商品管理列表</h2>
         <a href="product_add.php" class="btn btn-success mb-3">新增商品</a>

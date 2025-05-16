@@ -29,7 +29,7 @@ $index = 1;
 
 <body>
     <?php include('compoents/sidebar.php'); ?>
-    <div class="content-wrapper flex-grow-1 p-3">
+    <div id="content" class="flex-grow-1 p-3">
         <?php echo generate_breadcrumb($current_page); ?>
         <h2 class="mt-5 mb-5">開發人員列表</h2>
         <table class="table table-bordered table-hover">

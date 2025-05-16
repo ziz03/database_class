@@ -8,7 +8,7 @@
 function generate_breadcrumb($current_page) {
     // 定義頁面標題和層級結構
     $pages = [
-        'dashboard.php' => ['標題' => '首頁', '父頁面' => null],
+        'dashboard.php' => ['標題' => '首頁', '父頁面' => ''],
         'products.php' => ['標題' => '產品管理', '父頁面' => 'dashboard.php'],
         'changestatus.php' => ['標題' => '調整權限', '父頁面' => 'dashboard.php'],
         'edit_product.php' => ['標題' => '編輯產品', '父頁面' => 'products.php'],
@@ -16,8 +16,7 @@ function generate_breadcrumb($current_page) {
         'chat.php' => ['標題' => '聊天室', '父頁面' => 'dashboard.php'],
         'product_add.php' => ['標題' => '新增產品', '父頁面' => 'dashboard.php'],
         'changeaboutme.php' => ['標題' => '調整關於我', '父頁面' => 'dashboard.php'],
-
-        
+        'view_order.php' => ['標題' => '查看訂單', '父頁面' => 'dashboard.php'],
         // 可以根據需要添加更多頁面
     ];
     

@@ -161,7 +161,7 @@ $roles = get_roles($conn);
 <body>
     <?php include('./compoents/sidebar.php'); ?>
 
-    <div class="content-wrapper flex-grow-1 p-3">
+    <div id="content" class="flex-grow-1 p-3">
         <?php echo generate_breadcrumb($current_page); ?>
 
         <div class="container mt-5">

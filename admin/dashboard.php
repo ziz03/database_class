@@ -25,7 +25,7 @@ $user_texts = getaboutme();
 
     <?php include('./compoents/sidebar.php'); ?>
     <!-- 主要內容區域 -->
-    <div class="content-wrapper flex-grow-1 p-3">
+    <div id="content" class="flex-grow-1 p-3">
         <!-- 麵包屑導航 -->
         <?php echo generate_breadcrumb($current_page); ?>
 

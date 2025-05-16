@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <body>
     <?php include('compoents/sidebar.php'); ?>
-    <div class="content-wrapper flex-grow-1 p-3">
+    <div id="content" class="flex-grow-1 p-3">
         <!-- 麵包屑導航 -->
         <?php echo generate_breadcrumb($current_page); ?>
 

@@ -118,7 +118,8 @@ $total_pages = ceil($total_orders / $limit);
 
 <body>
     <?php include('./compoents/sidebar.php'); ?>
-    <div class="container mt-5">
+    <div id="content" class="flex-grow-1 p-3">
+        <?php echo generate_breadcrumb($current_page); ?>
         <h2 class="mb-4">訂單列表</h2>
         <form class="d-flex mb-3" method="get" action="">
             <input class="form-control me-2" type="search" placeholder="輸入收件人電話" aria-label="Search" name="search"
