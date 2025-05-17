@@ -314,3 +314,6 @@ by ziz 2025/05/11 19:10
 ### sidebar 再次調整
 ### 修改`admin/products.php`跟`admin/view_order.php`時間變成 'YYYY-MM-DD -HH-mm'
 ### by ZJ 2025/05/17 00:05
+### 修改products.php更新資料按鈕(直接暴力加br)
+- 時間那邊的-hh-mm我改成-hh:mm不然看了好亂稍微區隔
+### by ziz 2025/05/17 :13:00

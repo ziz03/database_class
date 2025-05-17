@@ -290,12 +290,12 @@ $result = $stmt->get_result();
                                     class="form-control form-control-sm"></td>
 
                             <td><img src="<?= htmlspecialchars($row['image_url']) ?>" alt="商品圖片" style="height: 50px;"></td>
-                            <td><?= $dt->format('y-m-d -H-i'); ?></td>
+                            <td><?= $dt->format('y-m-d -H:i'); ?></td>
                             <td>
                                 <input type="hidden" name="product_id" value="<?= htmlspecialchars($row['id']) ?>">
                                 <div class="d-flex flex-column gap-1">
                                     <button type="submit" name="update_all"
-                                        class="btn btn-outline-primary btn-sm ">更新資料</button>
+                                        class="btn btn-outline-primary btn-sm ">更新<br>資料</button>
                                     <a href="products.php?delete=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm"
                                         onclick="return confirm('確定要刪除此商品嗎？')">刪除</a>
                                 </div>
