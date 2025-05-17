@@ -316,4 +316,10 @@ by ziz 2025/05/11 19:10
 ### by ZJ 2025/05/17 00:05
 ### 修改products.php更新資料按鈕(直接暴力加br)
 - 時間那邊的-hh-mm我改成-hh:mm不然看了好亂稍微區隔
-### by ziz 2025/05/17 :13:00
+### by ziz 2025/05/17 13:00
+---
+### userCenter新增查看訂單的tabs
+- admin/view_order.php新增可以改訂單狀態，同步顯示到userCenter.php
+- action/update_vieworders.php是改vieworder的狀態下拉選單的後端
+- userCenter應該可以在訂單狀態那邊案取消訂單，但還沒想好怎麼搞，像是他按下去發送這個request，admin可以再查看訂單那邊view，然後confirm或reject之類的
+### by ziz 2025/05/17 16:24

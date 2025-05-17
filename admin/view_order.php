@@ -244,7 +244,7 @@ $total_pages = ceil($total_orders / $limit);
                     <?php foreach ($orders as $order):
                         $time = $order['created_at'];
                         $dt = new DateTime($time);
-                    ?>
+                        ?>
                         <?php
                         // 查詢商品名稱
                         $stmt = $conn->prepare("
@@ -266,7 +266,16 @@ $total_pages = ceil($total_orders / $limit);
                             <td><?= $display_id++ ?></td>
                             <td><?= htmlspecialchars($order['user_id']) ?></td>
                             <td><?= htmlspecialchars(number_format($order['total_price'])) ?> 元</td>
-                            <td><?= htmlspecialchars($order['status']) ?></td>
+
+                            <td>
+                                <select class="form-select order-status" data-order-id="<?= $order['id'] ?>">
+                                    <option value="Processing" <?= $order['status'] === 'Processing' ? 'selected' : '' ?>>處理中</option>
+                                    <option value="paid" <?= $order['status'] === 'paid' ? 'selected' : '' ?>>已付款</option>
+                                    <option value="shipped" <?= $order['status'] === 'shipped' ? 'selected' : '' ?>>已出貨</option>
+                                </select>
+                            </td>
+
+
                             <td><?= htmlspecialchars($dt->format('y-m-d -H:i')) ?></td>
                             <td><?= htmlspecialchars($order['recipient_name']) ?></td>
                             <td><?= htmlspecialchars($order['recipient_phone']) ?></td>
@@ -315,10 +324,32 @@ $total_pages = ceil($total_orders / $limit);
         <?php endif; ?>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
-    </script>
-    <script src="./js/sidebar.js"></script>
+    
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+        </script>
+    <script src="./js/sidebar.js"></script>
+<script>document.querySelectorAll('.order-status').forEach(select => {
+  select.addEventListener('change', function () {
+    const orderId = this.getAttribute('data-order-id');
+    const newStatus = this.value;
 
+    fetch('../action/update_vieworders.php', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ order_id: orderId, status: newStatus })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('訂單狀態更新成功！');
+      } else {
+        alert('更新失敗：' + data.message);
+      }
+    })
+    .catch(() => alert('網路錯誤，請稍後再試。'));
+  });
+});
+</script>
 </html>
