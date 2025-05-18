@@ -21,13 +21,18 @@ if (isset($_POST['account']) && isset($_POST['editname'])) {
         $stmt->bind_param("ss", $password, $account);
         $stmt->execute();
         $stmt->close();
-        header("Location: ../index.php");
+        $_SESSION['name'] = $password;
+        header("Location: ../userCenter.php");
+        exit();
+    }else{
+        $_SESSION['error'] = "找不到輸入的帳號";
+        header("Location: ../userCenter.php");
         exit();
     }
     $stmt->close();
 } else {
     // 未填寫帳號或密碼，重定向並帶上錯誤訊息
-    header("Location: ../login.php?error=請填寫帳號和密碼");
+    header("Location: ../login.php?error=請填寫帳號和名字");
     exit();
 }
 
