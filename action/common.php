@@ -152,89 +152,313 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
 {
     ?>
     <style>
-        /* 文青柔和色調 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap');
+        
+        /* 現代文青書店風格 */
         .product-card {
-            background-color: #fefaf3;
-            /* 淡奶油色 */
-            border: 1px solid #e2d9c3;
-            /* 淡棕色邊框 */
-            border-radius: 1rem;
-            box-shadow: 0 3px 10px rgba(183, 166, 138, 0.25);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: linear-gradient(135deg, #fefdfb 0%, #faf8f3 100%);
+            border: none;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px rgba(139, 125, 94, 0.12);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-family: 'Noto Serif TC', serif;
-            color: #5a5236;
-            /* 深棕色字 */
+            color: #4a3f2a;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #d4af37, #c9a961, #b8956b);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(183, 166, 138, 0.4);
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(139, 125, 94, 0.25);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
         }
 
         .product-card .ratio {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            background-color: #fcf9f1;
-            /* 淺米白 */
+            border-radius: 1.5rem 1.5rem 0 0;
+            background: linear-gradient(45deg, #fcfaf7, #f8f5f0);
+            position: relative;
+            overflow: hidden;
         }
 
         .product-card img {
-            padding: 1.5rem;
+            padding: 2rem;
             object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
         }
 
         .card-title {
-            font-weight: 700;
-            font-size: 1.15rem;
-            color: #6e5a31;
-            /* 溫暖深棕 */
-            margin-bottom: 0.4rem;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #2c2416;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .price-text {
-            color: #8b7d5e;
-            /* 柔和棕 */
+            color: #d4af37;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.35rem;
             margin-bottom: 1rem;
-        }
-
-        .btn-custom-outline {
-            font-family: 'Noto Serif TC', serif;
-            font-size: 0.9rem;
-            background-color: #f7f4ea;
-            color: #7c6f4f;
-            border: 1.5px solid #d6cba2;
-            border-radius: 2rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .btn-custom-outline:hover {
-            background-color: #a79d7e;
-            color: #fefaf3;
-            border-color: #958c6b;
-        }
-
-        .btn-custom-solid {
-            font-family: 'Noto Serif TC', serif;
-            font-size: 0.9rem;
-            background-color: #958c6b;
-            color: #fefaf3;
-            border: none;
-            border-radius: 2rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-custom-solid:hover {
-            background-color: #7e7658;
+            text-shadow: 0 1px 2px rgba(212, 175, 55, 0.1);
         }
 
         .product-desc {
+            font-size: 0.9rem;
+            color: #6b5d47;
+            min-height: 3.5em;
+            margin-bottom: 1.25rem;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        .product-meta {
+            background: linear-gradient(135deg, #f7f4ea, #f1ede3);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e8e2d5;
+        }
+
+        .product-meta span {
+            display: block;
             font-size: 0.85rem;
-            color: #7f7b68;
-            min-height: 3em;
-            margin-bottom: 1rem;
-            line-height: 1.3;
+            color: #7a6f59;
+            margin-bottom: 0.25rem;
+            font-weight: 400;
+        }
+
+        .product-meta span:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 現代化按鈕設計 */
+        .btn-detail {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, #ffffff, #f8f6f2);
+            color: #4a3f2a;
+            border: 2px solid #d4af37;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-detail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-detail:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+        }
+
+        .btn-detail:hover::before {
+            left: 100%;
+        }
+
+        .btn-cart {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #2c2416, #4a3f2a);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn-cart::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.5s ease;
+        }
+
+        .btn-cart:hover {
+            background: linear-gradient(135deg, #d4af37, #b8956b);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(44, 36, 22, 0.3);
+        }
+
+        .btn-cart:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        .btn-cart:active {
+            transform: translateY(0);
+        }
+
+        /* 搜尋結果提示 */
+        .search-info {
+            background: linear-gradient(135deg, #f7f4ea, #ede8d8);
+            border: 1px solid #d4af37;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: #4a3f2a;
+            font-weight: 500;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        /* 分頁美化 */
+        .pagination-container {
+            background: linear-gradient(135deg, #fefdfb, #f7f4ea);
+            border: 1px solid #e8e2d5;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(139, 125, 94, 0.1);
+        }
+
+        .pagination .page-link {
+            background: linear-gradient(135deg, #ffffff, #f8f6f2);
+            color: #4a3f2a;
+            border: 1px solid #d4af37;
+            border-radius: 50px;
+            padding: 0.75rem 1.25rem;
+            margin: 0 0.25rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .pagination .page-link:hover {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            color: #ffffff;
+            transform: translateY(-2px);
+            border-color: #d4af37;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, #2c2416, #4a3f2a);
+            border-color: #2c2416;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(44, 36, 22, 0.3);
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background: #f0f0f0;
+            color: #999;
+            border-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        /* 跳轉頁碼輸入框 */
+        .goto-form input {
+            background: linear-gradient(135deg, #ffffff, #faf8f3);
+            border: 2px solid #d4af37;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            color: #4a3f2a;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .goto-form input:focus {
+            outline: none;
+            border-color: #b8956b;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .goto-form button {
+            background: linear-gradient(135deg, #d4af37, #c9a961);
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .goto-form button:hover {
+            background: linear-gradient(135deg, #2c2416, #4a3f2a);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(44, 36, 22, 0.3);
+        }
+
+        /* 無結果訊息 */
+        .no-results {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #6b5d47;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        /* 響應式優化 */
+        @media (max-width: 768px) {
+            .card-body {
+                padding: 1.5rem 1.25rem;
+            }
+            
+            .card-title {
+                font-size: 1.1rem;
+            }
+            
+            .price-text {
+                font-size: 1.2rem;
+            }
+            
+            .pagination-container {
+                padding: 1.5rem;
+            }
         }
     </style>
 
@@ -248,8 +472,8 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                 }
                 ?>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="card product-card h-100 shadow-sm overflow-hidden">
-                        <div class="ratio ratio-4x3 rounded-top">
+                    <div class="card product-card h-100">
+                        <div class="ratio ratio-4x3">
                             <img src="<?= htmlspecialchars($image_url) ?>" alt="<?= htmlspecialchars($product['name']) ?>"
                                 class="img-fluid" />
                         </div>
@@ -257,25 +481,25 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                             <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
 
                             <?php if (!empty($product['description'])): ?>
-                                <p class="product-desc"><?= htmlspecialchars(mb_strimwidth($product['description'], 0, 60, '...')) ?>
-                                </p>
+                                <p class="product-desc"><?= htmlspecialchars(mb_strimwidth($product['description'], 0, 60, '...')) ?></p>
                             <?php endif; ?>
 
-                            <p class="price-text">$<?= number_format($product['price']) ?></p>
-                            <!-- 👇 新增ISBN與分類 -->
-                            <div class="mt-3 small text-muted d-flex flex-column" style="font-size: 0.8rem;">
-                                <span>ISBN：<?= htmlspecialchars($product['isbn']) ?></span>
-                                <span>分類：<?= htmlspecialchars($product['classification']) ?></span>
+                            <p class="price-text">NT$ <?= number_format($product['price']) ?></p>
+                            
+                            <!-- 美化的ISBN與分類資訊 -->
+                            <div class="product-meta">
+                                <span><strong>ISBN：</strong><?= htmlspecialchars($product['isbn']) ?></span>
+                                <span><strong>分類：</strong><?= htmlspecialchars($product['classification']) ?></span>
                             </div>
-                            <!-- 👆 -->
-                            <div class="mt-auto d-grid gap-2">
-                                <a href="product.php?product_id=<?= $product['id'] ?>" class="btn btn-custom-outline">
+                            
+                            <div class="mt-auto d-grid gap-3">
+                                <a href="product.php?product_id=<?= $product['id'] ?>" class="btn btn-detail">
                                     查看詳情
                                 </a>
                                 <form method="POST" action="action/cart.php" class="m-0">
                                     <input type="hidden" name="action" value="add">
                                     <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                                    <button type="submit" class="btn btn-custom-solid">加入購物車</button>
+                                    <button type="submit" class="btn btn-cart w-100">加入購物車</button>
                                 </form>
                             </div>
                         </div>
@@ -286,8 +510,10 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
 
             // 搜尋提示
             if (isset($_GET['keyword']) && !empty(trim($keyword))) {
-                echo '<div class="col-12 text-center mt-4">';
-                echo '<p>找到 ' . $totalProducts . ' 個符合 "' . htmlspecialchars($keyword) . '" 的商品，當前顯示第 ' . $page . ' 頁</p>';
+                echo '<div class="col-12">';
+                echo '<div class="search-info">';
+                echo '<p class="mb-0">🔍 找到 <strong>' . $totalProducts . '</strong> 個符合 "<em>' . htmlspecialchars($keyword) . '</em>" 的商品，當前顯示第 <strong>' . $page . '</strong> 頁</p>';
+                echo '</div>';
                 echo '</div>';
             }
 
@@ -295,59 +521,53 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
             $totalPages = ceil($totalProducts / $limit);
             if ($totalPages > 1): ?>
                 <div class="col-12 mt-5">
-                    <div class="d-flex flex-column flex-md-row flex-wrap justify-content-center align-items-center gap-4 p-4 rounded-4 shadow-sm border"
-                        style="background-color: #f7f3ef; border-color: #e2dcd5;">
+                    <div class="pagination-container">
+                        <div class="d-flex flex-column flex-md-row flex-wrap justify-content-center align-items-center gap-4">
 
-                        <!-- 分頁按鈕 -->
-                        <ul class="pagination mb-0 gap-2 justify-content-center flex-wrap">
-                            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link rounded-pill px-3 border-0" style="background-color: #e7e2da; color: #4a4a4a;"
-                                    href="?page=1<?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">第一頁</a>
-                            </li>
-
-                            <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                                <a class="page-link rounded-pill px-3 border-0" style="background-color: #e7e2da; color: #4a4a4a;"
-                                    href="?page=<?= max(1, $page - 1) ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">上一頁</a>
-                            </li>
-
-                            <?php
-                            $maxShow = 5;
-                            $start = max(1, $page - floor($maxShow / 2));
-                            $end = min($totalPages, $start + $maxShow - 1);
-                            if ($end - $start < $maxShow - 1)
-                                $start = max(1, $end - $maxShow + 1);
-
-                            for ($i = $start; $i <= $end; $i++): ?>
-                                <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                                    <a class="page-link rounded-pill px-3 border-0 <?= ($i == $page) ? 'text-white' : '' ?>"
-                                        style="<?= ($i == $page) ? 'background-color: #6c8b74;' : 'background-color: #e7e2da; color: #4a4a4a;' ?>"
-                                        href="?page=<?= $i ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">
-                                        <?= $i ?>
-                                    </a>
+                            <!-- 分頁按鈕 -->
+                            <ul class="pagination mb-0 gap-1 justify-content-center flex-wrap">
+                                <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=1<?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">第一頁</a>
                                 </li>
-                            <?php endfor; ?>
 
-                            <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
-                                <a class="page-link rounded-pill px-3 border-0" style="background-color: #e7e2da; color: #4a4a4a;"
-                                    href="?page=<?= min($totalPages, $page + 1) ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">下一頁</a>
-                            </li>
-                        </ul>
+                                <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= max(1, $page - 1) ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">上一頁</a>
+                                </li>
 
-                        <!-- 跳轉頁碼 -->
-                        <form class="d-flex align-items-center gap-2" onsubmit="return jumpToPage(event)">
-                            <input type="number" id="gotoPage" min="1" max="<?= $totalPages ?>"
-                                class="form-control form-control-sm rounded-pill border-0 shadow-sm" placeholder="頁碼"
-                                style="width: 80px; background-color: #fff8f0;">
-                            <button class="btn btn-sm rounded-pill shadow-sm" style="background-color: #6c8b74; color: #fff;"
-                                type="submit">前往</button>
-                            <?php
-                            foreach ($_GET as $key => $value) {
-                                if ($key !== 'page' && $key !== 'gotoPage') {
-                                    echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                                <?php
+                                $maxShow = 5;
+                                $start = max(1, $page - floor($maxShow / 2));
+                                $end = min($totalPages, $start + $maxShow - 1);
+                                if ($end - $start < $maxShow - 1)
+                                    $start = max(1, $end - $maxShow + 1);
+
+                                for ($i = $start; $i <= $end; $i++): ?>
+                                    <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
+                                        <a class="page-link" href="?page=<?= $i ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">
+                                            <?= $i ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?>
+
+                                <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">下一頁</a>
+                                </li>
+                            </ul>
+
+                            <!-- 跳轉頁碼 -->
+                            <form class="goto-form d-flex align-items-center gap-2" onsubmit="return jumpToPage(event)">
+                                <input type="number" id="gotoPage" min="1" max="<?= $totalPages ?>"
+                                    class="form-control form-control-sm" placeholder="頁碼" style="width: 80px;">
+                                <button class="btn btn-sm" type="submit">前往</button>
+                                <?php
+                                foreach ($_GET as $key => $value) {
+                                    if ($key !== 'page' && $key !== 'gotoPage') {
+                                        echo '<input type="hidden" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '">';
+                                    }
                                 }
-                            }
-                            ?>
-                        </form>
+                                ?>
+                            </form>
+                        </div>
                     </div>
                 </div>
 
@@ -368,12 +588,15 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                 <?php
             endif;
         } else {
-            echo '<div class="col-12 text-center mt-4">';
+            echo '<div class="col-12">';
+            echo '<div class="no-results">';
             if (isset($_GET['keyword']) && !empty(trim($keyword))) {
-                echo '<p>沒有找到符合 "' . htmlspecialchars($keyword) . '" 的商品</p>';
+                echo '<p>📚 沒有找到符合 "' . htmlspecialchars($keyword) . '" 的商品</p>';
+                echo '<p class="mt-2 text-muted">試試其他關鍵字或瀏覽我們的熱門書籍</p>';
             } else {
                 echo '<p>' . $noResultsMessage . '</p>';
             }
+            echo '</div>';
             echo '</div>';
         }
         ?>
