@@ -49,16 +49,16 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'changestatus.php') ? 'active bg-primary rounded' : ''; ?>"
                     href="changestatus.php" data-bs-toggle="tooltip" data-bs-placement="right" title="調整權限">
                     📊
-                    <span class="ms-2 sidebar-text">調整權限</span>
+                    <span class="ms-2 sidebar-text">帳號資訊</span>
                 </a>
             </li>
-            <li class="nav-item mb-2">
+            <!-- <li class="nav-item mb-2">
                 <a class="nav-link text-white d-flex align-items-center <?php echo ($current_page == 'changeaboutme.php') ? 'active bg-primary rounded' : ''; ?>"
                     href="changeaboutme.php" data-bs-toggle="tooltip" data-bs-placement="right" title="調整關於我">
                     🍟
                     <span class="ms-2 sidebar-text">調整關於我</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item mb-2">
                 <a class="nav-link text-white d-flex align-items-center " href="..\index.php" data-bs-toggle="tooltip"
                     data-bs-placement="right" title="看看前台">

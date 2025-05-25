@@ -8,7 +8,7 @@ require_once 'action/database.php';
 
 <head>
     <meta charset="UTF-8">
-    <title>所有產品</title>
+    <title>所有產品 | 人生研究室</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="image/blackLOGO.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">

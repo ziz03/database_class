@@ -26,7 +26,7 @@ $stock_issues = [];
 
 foreach ($cart_items as &$item) {
     $total_price += $item['price'] * $item['quantity'];
-    
+
     if ($item['quantity'] > $item['stock']) {
         $has_stock_issues = true;
         $stock_issues[] = [
@@ -52,30 +52,29 @@ foreach ($cart_items as &$item) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <style>
         body {
-            background-color: #fefefe;
+            background-color: #faf8f2;
             font-family: "Noto Serif TC", serif;
         }
 
         h2, h4 {
             font-weight: 600;
-            color: #2c3e50;
+            color: #3e3e3e;
         }
 
         .stock-warning {
-            color: #d97706; /* Bootstrap warning orange */
+            color: #d97706;
             font-weight: 600;
         }
 
         .stock-danger {
-            color: #dc3545; /* Bootstrap danger red */
+            color: #dc3545;
             font-weight: 700;
         }
 
         .stock-ok {
-            color: #198754; /* Bootstrap success green */
+            color: #198754;
         }
 
-        /* 讓背景較淺色的庫存不足項目醒目 */
         .bg-light.stock-issue {
             background-color: #fff5f5 !important;
         }
@@ -84,12 +83,10 @@ foreach ($cart_items as &$item) {
             font-size: 1rem;
         }
 
-        /* 按鈕區 */
         .form-action-buttons {
             margin-top: 2.5rem;
         }
 
-        /* 縮小庫存警告標題和 icon */
         .alert h5 {
             font-size: 1.25rem;
             display: flex;
@@ -97,7 +94,6 @@ foreach ($cart_items as &$item) {
             gap: 0.5rem;
         }
 
-        /* 讓回到購物車按鈕及刷新按鈕顏色對比更明顯 */
         .btn-outline-primary:hover {
             background-color: #0d6efd;
             color: white;
@@ -108,10 +104,19 @@ foreach ($cart_items as &$item) {
             color: white;
         }
 
-        /* 表單欄位 placeholder 色調較柔和 */
         ::placeholder {
             color: #6c757d;
             opacity: 1;
+        }
+
+        input.form-control, textarea.form-control {
+            background-color: #fefdfb;
+            border-radius: 0.75rem;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            border-radius: 0.75rem;
         }
     </style>
 </head>
@@ -141,8 +146,7 @@ foreach ($cart_items as &$item) {
                             <p class="mb-3">以下商品庫存不足，請返回購物車調整數量後再結帳：</p>
                             <ul class="mb-3">
                                 <?php foreach ($stock_issues as $issue): ?>
-                                    <li><strong><?= htmlspecialchars($issue['name']) ?></strong> - 您要購買 <?= $issue['quantity'] ?>
-                                        件，但庫存只有 <?= $issue['stock'] ?> 件</li>
+                                    <li><strong><?= htmlspecialchars($issue['name']) ?></strong> - 您要購買 <?= $issue['quantity'] ?> 件，但庫存只有 <?= $issue['stock'] ?> 件</li>
                                 <?php endforeach; ?>
                             </ul>
                             <a href="cart.php" class="btn btn-primary btn-sm">返回購物車調整數量</a>

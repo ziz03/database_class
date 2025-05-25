@@ -552,6 +552,10 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
                                 <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
                                     <a class="page-link" href="?page=<?= min($totalPages, $page + 1) ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">下一頁</a>
                                 </li>
+
+                                <li class="page-item <?= ($page >= $totalPages) ? 'disabled' : '' ?>">
+                                    <a class="page-link" href="?page=<?= $totalPages ?><?= $keyword ? '&keyword=' . urlencode($keyword) : '' ?>">最後一頁</a>
+                                </li>
                             </ul>
 
                             <!-- 跳轉頁碼 -->
@@ -603,7 +607,6 @@ function displayProductsList($result, $noResultsMessage = '暫無商品', $keywo
     </div>
     <?php
 }
-
 
 
 

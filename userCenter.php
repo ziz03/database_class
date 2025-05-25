@@ -19,7 +19,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $orders = $result->fetch_all(MYSQLI_ASSOC);
 
-if($_SESSION['error']){
+if(isset($_SESSION['error'])){
     $error = $_SESSION['error'];
     echo '<script>alert("' . $error . '");</script>';
     unset($_SESSION['error']);

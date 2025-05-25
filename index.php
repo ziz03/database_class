@@ -131,11 +131,21 @@ require_once 'action/common.php';
         "在文字之間，我們練習成為更好的人。",
         "閱讀使靈魂發光，使見識增長。",
         "書籍是人類進步的階梯。",
-        "人間的黑夜靠燈火點燃，人心的黑夜靠書本點燃。",
-        "當你老頂了，就會老頂了"
+        "人間的黑夜靠燈火點燃，人心的黑夜靠書本點燃。"
+
     ];
     $randomQuote = $quotes[array_rand($quotes)];
     ?>
+    <section class="text-center py-4">
+    <a href="Allproduct.php" class="btn btn-outline-dark rounded-pill px-4 py-2 shadow-sm"
+        style="font-weight: 500; letter-spacing: 0.5px; font-family: 'Noto Serif TC', serif;
+        transition: all 0.3s ease;"
+        onmouseover="this.style.backgroundColor='#3e3e3e'; this.style.color='#fff';"
+        onmouseout="this.style.backgroundColor='transparent'; this.style.color='#3e3e3e';">
+        前往所有商品頁
+    </a>
+</section>
+
     <section class="text-center py-5 fade-in"
         style=" font-family: 'Noto Serif TC'; color: #5e4638;">
         <blockquote class="blockquote mb-0">
